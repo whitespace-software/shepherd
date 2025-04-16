@@ -302,6 +302,12 @@ declare namespace Step {
      */
     text?: string | (() => string);
 
+    /**
+     * Icon name for materials-symbols-outlind class 
+    */
+    iconPosition?: "left" | "right" | (() => "left" | "right");
+    iconName?: string | (() => string);
+
     position?: string;
 
   }
