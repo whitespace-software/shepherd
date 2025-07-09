@@ -267,6 +267,11 @@
         max-height: 650px;
     }
 
+    .shepherd-extra-large-container {
+        max-width: 750px;
+        max-height: 750px;
+    }
+
     .shepherd-enabled.shepherd-element {
         opacity: 1;
         visibility: visible;
