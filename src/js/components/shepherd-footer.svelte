@@ -111,7 +111,6 @@
     .additional-buttons-container.align-right {
         justify-content: end;
         padding: 0.5rem;
-        padding-bottom: 0.75rem;
     }
 
     .footer-buttons-container {

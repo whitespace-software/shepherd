@@ -183,13 +183,13 @@ declare namespace Step {
      * An amount of border radius to add around the modal overlay opening
      */
     modalOverlayOpeningRadius?:
-      | number
-      | {
-          topLeft?: number;
-          bottomLeft?: number;
-          bottomRight?: number;
-          topRight?: number;
-        };
+    | number
+    | {
+      topLeft?: number;
+      bottomLeft?: number;
+      bottomRight?: number;
+      topRight?: number;
+    };
 
     /**
      * Extra [options to pass to FloatingUI]{@link https://floating-ui.com/docs/tutorial/}
@@ -250,7 +250,7 @@ declare namespace Step {
     video?: StepOptionsVideo;
   }
 
-  type PopperPlacement = 'top'|'top-start'|'top-end'|'bottom'|'bottom-start'|'bottom-end'|'right'|'right-start'|'right-end'|'left'|'left-start'|'left-end';
+  type PopperPlacement = 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end';
 
   interface StepOptionsAttachTo {
     element?: HTMLElement | string | (() => HTMLElement | string | null | undefined);
@@ -301,6 +301,9 @@ declare namespace Step {
      * The HTML text of the button
      */
     text?: string | (() => string);
+    
+    iconName?: string | (() => string);
+    iconPosition?: "left" | "right" | (() => "left" | "right");
 
     position?: string;
 
@@ -321,7 +324,7 @@ declare namespace Step {
 
   interface StepOptionsImage {
     url: string;
-    position?:string;
+    position?: string;
     width: number;
     height: number;
     classes?: string;
