@@ -1,64 +1,64 @@
 {
-  "name": "shepherd-monorepo",
-  "private": "true",
-  "version": "12.0.0-alpha.13",
-  "description": "The monorepo for Shepherd",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shepherd-pro/shepherd.git"
-  },
-  "license": "MIT",
-  "authors": [
-    "Robbie Wagner <rwwagner90@gmail.com>",
-    "Chuck Carpenter <chuck@shipshape.io>"
-  ],
-  "scripts": {
-    "prepare": "pnpm -F shepherd.js build",
-    "build": "pnpm -F shepherd.js build && pnpm -F '!shepherd.js' -F !landing -F !shepherd-docs build",
-    "cypress:install": "pnpm -F 'cypress-tests' cypress:install",
-    "dev": "pnpm watch",
-    "docs": "node_modules/.bin/jsdoc -c .jsdoc.js --verbose",
-    "lint": "pnpm -F '*' lint",
-    "lint:fix": "pnpm -F '*' lint:fix",
-    "lint:js": "pnpm -F '*' lint:js",
-    "start": "pnpm watch",
-    "test:ci": "pnpm build && pnpm -F '*' test:ci",
-    "test:cy:watch": "pnpm -F cypress-tests test:watch",
-    "test:unit:watch": "pnpm -F unit-tests test:watch",
-    "types:check": "pnpm -F shepherd.js types:check",
-    "view-coverage": "pnpm -F unit-tests view-coverage",
-    "watch": "pnpm -F shepherd.js watch"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "autoprefixer": "^10.4.20",
-    "concurrently": "^8.2.2",
-    "del": "^7.1.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-jest": "^28.9.0",
-    "eslint-plugin-svelte": "^2.46.1",
-    "postcss": "^8.4.49",
-    "prettier": "3.3.3",
-    "prettier-plugin-svelte": "^3.3.2",
-    "release-plan": "^0.9.2",
-    "replace": "^1.2.2",
-    "shepherd.js": "workspace:*",
-    "svelte": "^4.2.19",
-    "typescript": "^5.7.2"
-  },
-  "packageManager": "pnpm@9.2.0",
-  "engines": {
-    "node": "18.* || >= 20"
-  },
-  "pnpm": {
-    "overrides": {
-      "happy-dom@<15.10.2": ">=15.10.2",
-      "vue-tsc@<2.0.29": ">=2.0.29",
-      "@vue/language-core@<2.0.29": ">=2.0.29",
-      "cross-spawn@>=7.0.0 <7.0.5": ">=7.0.5"
+    "name": "shepherd-monorepo",
+    "private": "true",
+    "version": "12.0.0-alpha.13",
+    "description": "The monorepo for Shepherd",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shepherd-pro/shepherd.git"
+    },
+    "license": "MIT",
+    "authors": [
+        "Robbie Wagner <rwwagner90@gmail.com>",
+        "Chuck Carpenter <chuck@shipshape.io>"
+    ],
+    "scripts": {
+        "prepare": "pnpm -F shepherd.js build",
+        "build": "pnpm -F shepherd.js build && pnpm -F '!shepherd.js' -F !landing -F !shepherd-docs build",
+        "cypress:install": "pnpm -F 'cypress-tests' cypress:install",
+        "dev": "pnpm watch",
+        "docs": "node_modules/.bin/jsdoc -c .jsdoc.js --verbose",
+        "lint": "pnpm -F '*' lint",
+        "lint:fix": "pnpm -F '*' lint:fix",
+        "lint:js": "pnpm -F '*' lint:js",
+        "start": "pnpm watch",
+        "test:ci": "pnpm build && pnpm -F '*' test:ci",
+        "test:cy:watch": "pnpm -F cypress-tests test:watch",
+        "test:unit:watch": "pnpm -F unit-tests test:watch",
+        "types:check": "pnpm -F shepherd.js types:check",
+        "view-coverage": "pnpm -F unit-tests view-coverage",
+        "watch": "pnpm -F shepherd.js watch"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.26.0",
+        "@babel/preset-env": "^7.26.0",
+        "@typescript-eslint/eslint-plugin": "^7.18.0",
+        "@typescript-eslint/parser": "^7.18.0",
+        "autoprefixer": "^10.4.20",
+        "concurrently": "^8.2.2",
+        "del": "^7.1.0",
+        "eslint": "^8.57.1",
+        "eslint-plugin-jest": "^28.9.0",
+        "eslint-plugin-svelte": "^2.46.1",
+        "postcss": "^8.4.49",
+        "prettier": "3.3.3",
+        "prettier-plugin-svelte": "^3.3.2",
+        "release-plan": "^0.9.2",
+        "replace": "^1.2.2",
+        "shepherd.js": "workspace:*",
+        "svelte": "^4.2.19",
+        "typescript": "^5.7.2"
+    },
+    "packageManager": "pnpm@9.2.0",
+    "engines": {
+        "node": "18.* || >= 20"
+    },
+    "pnpm": {
+        "overrides": {
+            "happy-dom@<15.10.2": ">=15.10.2",
+            "vue-tsc@<2.0.29": ">=2.0.29",
+            "@vue/language-core@<2.0.29": ">=2.0.29",
+            "cross-spawn@>=7.0.0 <7.0.5": ">=7.0.5"
+        }
     }
-  }
 }
