@@ -10,7 +10,6 @@ import {
 import { cleanupSteps } from './utils/cleanup.ts';
 import { normalizePrefix, uuid } from './utils/general.ts';
 // ---@ts-expect-error TODO: we don't have Svelte .d.ts files until we generate the dist
-// @ts-ignore TODO: we don't have Svelte .d.ts files until we generate the dist
 import ShepherdModal from './components/shepherd-modal.svelte';
 
 export interface EventOptions {

@@ -3,7 +3,7 @@
  * @param value The param to check if it is an Element
  */
 export function isElement<T>(value: T | Element): value is Element {
-  return value instanceof Element;
+    return value instanceof Element;
 }
 
 /**
@@ -11,7 +11,7 @@ export function isElement<T>(value: T | Element): value is Element {
  * @param value The param to check if it is an HTMLElement
  */
 export function isHTMLElement<T>(value: T | HTMLElement): value is HTMLElement {
-  return value instanceof HTMLElement;
+    return value instanceof HTMLElement;
 }
 
 /**
@@ -20,7 +20,7 @@ export function isHTMLElement<T>(value: T | HTMLElement): value is HTMLElement {
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function isFunction<T>(value: T | Function): value is Function {
-  return typeof value === 'function';
+    return typeof value === 'function';
 }
 
 /**
@@ -28,7 +28,7 @@ export function isFunction<T>(value: T | Function): value is Function {
  * @param value The param to check if it is a string
  */
 export function isString<T>(value: T | string): value is string {
-  return typeof value === 'string';
+    return typeof value === 'string';
 }
 
 /**
@@ -36,5 +36,5 @@ export function isString<T>(value: T | string): value is string {
  * @param value The param to check if it is undefined
  */
 export function isUndefined<T>(value: T | undefined): value is undefined {
-  return value === undefined;
+    return value === undefined;
 }

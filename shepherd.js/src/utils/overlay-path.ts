@@ -1,16 +1,16 @@
 interface OverlayPathParams {
-  height: number;
-  r?:
+    height: number;
+    r?:
     | number
     | {
         bottomLeft: number;
         bottomRight: number;
         topLeft: number;
         topRight: number;
-      };
-  x?: number;
-  y?: number;
-  width: number;
+    };
+    x?: number;
+    y?: number;
+    width: number;
 }
 /**
  * Generates the svg path data for a rounded rectangle overlay
@@ -23,23 +23,23 @@ interface OverlayPathParams {
  * @returns Rounded rectangle overlay path data.
  */
 export function makeOverlayPath({
-  width,
-  height,
-  x = 0,
-  y = 0,
-  r = 0
+    width,
+    height,
+    x = 0,
+    y = 0,
+    r = 0
 }: OverlayPathParams) {
-  const { innerWidth: w, innerHeight: h } = window;
-  const {
-    topLeft = 0,
-    topRight = 0,
-    bottomRight = 0,
-    bottomLeft = 0
-  } = typeof r === 'number'
-    ? { topLeft: r, topRight: r, bottomRight: r, bottomLeft: r }
-    : r;
+    const { innerWidth: w, innerHeight: h } = window;
+    const {
+        topLeft = 0,
+        topRight = 0,
+        bottomRight = 0,
+        bottomLeft = 0
+    } = typeof r === 'number'
+        ? { topLeft: r, topRight: r, bottomRight: r, bottomLeft: r }
+        : r;
 
-  return `M${w},${h}\
+    return `M${w},${h}\
 H0\
 V0\
 H${w}\

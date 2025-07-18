@@ -13,25 +13,25 @@
 </script>
 
 <header class="shepherd-header" class:has-badge={badge}>
-  {#if title}
-    {#if badge}
-      <span
-        class="shepherd-badge"
-        style="
-              --bg-color: {badge.backgroundColor};
-              --text-color: {badge.textColor};
-          "
-      >
-        {badge.text}
-      </span>
+    {#if title}
+        {#if badge}
+            <span
+                class="shepherd-badge"
+                style="
+                    --bg-color: {badge.backgroundColor};
+                    --text-color: {badge.textColor};
+                "
+            >
+                {badge.text}
+            </span>
+        {/if}
+
+        <ShepherdTitle {labelId} {title} />
     {/if}
 
-    <ShepherdTitle {labelId} {title} />
-  {/if}
-
-  {#if cancelIcon && cancelIcon.enabled}
-    <ShepherdCancelIcon {cancelIcon} {step} />
-  {/if}
+    {#if cancelIcon && cancelIcon.enabled}
+        <ShepherdCancelIcon {cancelIcon} {step} />
+    {/if}
 </header>
 
 <style global>

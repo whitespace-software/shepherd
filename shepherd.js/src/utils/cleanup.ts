@@ -6,19 +6,19 @@ import { isHTMLElement } from './type-check.ts';
  * @param tour The tour object
  */
 export function cleanupSteps(tour: Tour) {
-  if (tour) {
-    const { steps } = tour;
+    if (tour) {
+        const { steps } = tour;
 
-    steps.forEach((step) => {
-      if (
-        step.options &&
-        step.options.canClickTarget === false &&
-        step.options.attachTo
-      ) {
-        if (isHTMLElement(step.target)) {
-          step.target.classList.remove('shepherd-target-click-disabled');
-        }
-      }
-    });
-  }
+        steps.forEach((step) => {
+            if (
+                step.options &&
+                step.options.canClickTarget === false &&
+                step.options.attachTo
+            ) {
+                if (isHTMLElement(step.target)) {
+                    step.target.classList.remove('shepherd-target-click-disabled');
+                }
+            }
+        });
+    }
 }
