@@ -1,29 +1,29 @@
 <script>
-  import ShepherdButton from './shepherd-button.svelte';
+    import ShepherdButton from './shepherd-button.svelte';
 
-  export let step;
+    export let step;
 
-  $: buttons = step.options.buttons;
+    $: buttons = step.options.buttons;
 </script>
 
 <footer class="shepherd-footer">
-  {#if buttons}
-    {#each buttons as config}
-      <ShepherdButton {config} {step} />
-    {/each}
-  {/if}
+    {#if buttons}
+        {#each buttons as config}
+            <ShepherdButton {config} {step} />
+        {/each}
+    {/if}
 </footer>
 
 <style global>
-  .shepherd-footer {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 0.75rem 0.75rem;
-  }
+    .shepherd-footer {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 0.75rem 0.75rem;
+    }
 
-  .shepherd-footer .shepherd-button:last-child {
-    margin-right: 0;
-  }
+    .shepherd-footer .shepherd-button:last-child {
+        margin-right: 0;
+    }
 </style>
