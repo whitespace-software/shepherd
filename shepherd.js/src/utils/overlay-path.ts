@@ -1,4 +1,4 @@
-interface OverlayPathParams {
+export interface OverlayPathParams {
   height: number;
   r?:
     | number

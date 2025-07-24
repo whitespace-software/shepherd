@@ -1,10 +1,11 @@
-<script>
-  import { makeOverlayPath } from '../utils/overlay-path.ts';
+<script lang="typescript">
+  import  { Step } from 'src/step.ts';
+  import { makeOverlayPath, type OverlayPathParams } from '../utils/overlay-path.ts';
 
-  export let element, openingProperties;
+  export let element: SVGSVGElement, openingProperties: OverlayPathParams;
   let modalIsVisible = false;
-  let rafId = undefined;
-  let pathDefinition;
+  let rafId: number | undefined = undefined;
+  let pathDefinition: string;
 
   $: pathDefinition = makeOverlayPath(openingProperties);
 
@@ -42,12 +43,12 @@
    * @param {HTMLElement} targetElement The element the opening will expose
    */
   export function positionModal(
-    modalOverlayOpeningPadding = 0,
-    modalOverlayOpeningRadius = 0,
-    modalOverlayOpeningXOffset = 0,
-    modalOverlayOpeningYOffset = 0,
-    scrollParent,
-    targetElement
+    modalOverlayOpeningPadding: number = 0,
+    modalOverlayOpeningRadius: number | { topLeft: number; bottomLeft: number; bottomRight: number; topRight: number; } = 0,
+    modalOverlayOpeningXOffset: number = 0,
+    modalOverlayOpeningYOffset: number = 0,
+    scrollParent: HTMLElement | null | undefined,
+    targetElement: HTMLElement | null | undefined
   ) {
     if (targetElement) {
       const { y, height } = _getVisibleHeight(targetElement, scrollParent);
@@ -71,7 +72,7 @@
    * If modal is enabled, setup the svg mask opening and modal overlay for the step
    * @param {Step} step The step instance
    */
-  export function setupForStep(step) {
+  export function setupForStep(step: Step) {
     // Ensure we move listeners from the previous step, before we setup new ones
     _cleanupStepEventListeners();
 
@@ -90,11 +91,11 @@
     modalIsVisible = true;
   }
 
-  const _preventModalBodyTouch = (e) => {
+  const _preventModalBodyTouch = (e: Event) => {
     e.preventDefault();
   };
 
-  const _preventModalOverlayTouch = (e) => {
+  const _preventModalOverlayTouch = (e: Event) => {
     e.stopPropagation();
   };
 
@@ -119,7 +120,7 @@
       rafId = undefined;
     }
 
-    window.removeEventListener('touchmove', _preventModalBodyTouch, {
+    (window as any).removeEventListener('touchmove', _preventModalBodyTouch, {
       passive: false
     });
   }
@@ -129,7 +130,7 @@
    * @param {Step} step The step to style the opening for
    * @private
    */
-  function _styleForStep(step) {
+  function _styleForStep(step: Step) {
     const {
       modalOverlayOpeningPadding,
       modalOverlayOpeningRadius,
@@ -165,7 +166,7 @@
    * @returns {HTMLElement}
    * @private
    */
-  function _getScrollParent(element) {
+  function _getScrollParent(element: HTMLElement | null | undefined): HTMLElement | null {
     if (!element) {
       return null;
     }
@@ -188,7 +189,7 @@
    * @param {HTMLElement} element The target element
    * @private
    */
-  function _getIframeOffset(element) {
+  function _getIframeOffset(element: HTMLElement | null | undefined) {
     let offset = {
       top: 0,
       left: 0
@@ -198,7 +199,7 @@
       return offset;
     }
 
-    let targetWindow = element.ownerDocument.defaultView;
+    let targetWindow: any = element.ownerDocument.defaultView;
 
     while (targetWindow !== window.top) {
       const targetIframe = targetWindow?.frameElement;
@@ -226,7 +227,7 @@
    * @returns {{y: number, height: number}}
    * @private
    */
-  function _getVisibleHeight(element, scrollParent) {
+  function _getVisibleHeight(element: HTMLElement, scrollParent: HTMLElement | null | undefined) : { y: number; height: number; } {
     const elementRect = element.getBoundingClientRect();
     let top = elementRect.y || elementRect.top;
     let bottom = elementRect.bottom || top + elementRect.height;

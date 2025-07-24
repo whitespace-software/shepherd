@@ -115,10 +115,10 @@ export interface StepOptions {
   modalOverlayOpeningRadius?:
     | number
     | {
-        topLeft?: number;
-        bottomLeft?: number;
-        bottomRight?: number;
-        topRight?: number;
+        topLeft: number;
+        bottomLeft: number;
+        bottomRight: number;
+        topRight: number;
       };
 
   /**
