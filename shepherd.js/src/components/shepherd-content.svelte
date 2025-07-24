@@ -1,10 +1,11 @@
-<script>
+<script lang="typescript">
   import ShepherdFooter from './shepherd-footer.svelte';
   import ShepherdHeader from './shepherd-header.svelte';
   import ShepherdText from './shepherd-text.svelte';
   import { isUndefined } from '../utils/type-check.ts';
+  import { Step } from 'src/step.ts';
 
-  export let descriptionId, labelId, step;
+  export let descriptionId: string, labelId: string, step: Step;
 </script>
 
 <div class="shepherd-content">

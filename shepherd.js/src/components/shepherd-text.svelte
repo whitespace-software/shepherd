@@ -3,7 +3,7 @@
   import { isHTMLElement, isFunction, isString } from '../utils/type-check.ts';
   import type { Step } from 'src/step.ts';
 
-  export let descriptionId: string, element: HTMLElement, step: Step;
+  export let descriptionId: string, element: HTMLElement | undefined = undefined, step: Step;
 
   afterUpdate(() => {
     let { text } = step.options;
@@ -19,6 +19,10 @@
     // } else {
     //   element.innerHTML = text;
     // }
+
+    if(!element){
+      return;
+    }
 
     if(isHTMLElement(text)){
       element.appendChild(text);
