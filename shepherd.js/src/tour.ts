@@ -343,6 +343,10 @@ export class Tour extends Evented {
     }
   }
 
+  getName() {
+    return this.options.tourName ?? null;
+  }
+
   /**
    * Start the tour
    */

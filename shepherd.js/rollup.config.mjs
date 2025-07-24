@@ -12,7 +12,8 @@ import license from 'rollup-plugin-license';
 import postcss from 'rollup-plugin-postcss';
 import replace from '@rollup/plugin-replace';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import sveltePreprocess from 'svelte-preprocess';
+// import sveltePreprocess from 'svelte-preprocess';
+import { sveltePreprocess } from 'svelte-preprocess';
 import svelte from 'rollup-plugin-svelte';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { emitDts } from 'svelte2tsx';
@@ -57,7 +58,7 @@ const plugins = [
 // If we are running with --environment DEVELOPMENT, serve via browsersync for local development
 if (process.env.DEVELOPMENT) {
   plugins.push(
-    serve({ contentBase: ['.', 'dist', '../test/cypress/dummy'], open: true })
+    serve({ contentBase: ['.', 'dist', '../test/cypress/dummy'], open: false })
   );
   plugins.push(livereload());
 }
@@ -88,7 +89,7 @@ export default [
           console.log('Rename .svelte.d.ts to .d.svelte.ts');
 
           await execaCommand(
-            `renamer --find .svelte.d.ts --replace .d.svelte.ts tmp/esm/**`,
+            `renamer --find .svelte.d.ts --replace .d.svelte.ts tmp/esm/** --force`,
             {
               stdio: 'inherit'
             }
@@ -158,7 +159,7 @@ export default [
           console.log('Rename .svelte.d.ts to .d.svelte.ts');
 
           await execaCommand(
-            `renamer --find .svelte.d.ts --replace .d.svelte.ts tmp/cjs/**`,
+            `renamer --find .svelte.d.ts --replace .d.svelte.ts tmp/cjs/** --force`,
             {
               stdio: 'inherit'
             }

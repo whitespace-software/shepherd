@@ -1,8 +1,9 @@
-<script>
+<script lang="typescript">
   import { afterUpdate } from 'svelte';
-  import { isHTMLElement, isFunction } from '../utils/type-check.ts';
+  import { isHTMLElement, isFunction, isString } from '../utils/type-check.ts';
+  import type { Step } from 'src/step.ts';
 
-  export let descriptionId, element, step;
+  export let descriptionId: string, element: HTMLElement, step: Step;
 
   afterUpdate(() => {
     let { text } = step.options;
@@ -11,11 +12,22 @@
       text = text.call(step);
     }
 
-    if (isHTMLElement(text)) {
+    // if (isHTMLElement(text)) {
+    //   element.appendChild(text);
+    // } else if (Array.isArray(text) && text.every(item => isString(item))) {
+    //   element.innerHTML = text.join('');
+    // } else {
+    //   element.innerHTML = text;
+    // }
+
+    if(isHTMLElement(text)){
       element.appendChild(text);
-    } else {
+    } else if(isString(text)){
       element.innerHTML = text;
+    } else if(Array.isArray(text)) {
+      element.innerHTML = text.join("")
     }
+
   });
 </script>
 
