@@ -2,14 +2,16 @@
   import { afterUpdate } from 'svelte';
   import { isFunction } from '../utils/type-check.ts';
 
-  export let labelId: string, element: HTMLElement, title: string | (() => string);
+  export let labelId: string, element: HTMLElement | undefined = undefined, title: string | (() => string);
 
   afterUpdate(() => {
     if (isFunction(title)) {
       title = title();
     }
 
-    element.innerHTML = title;
+    if(element){
+      element.innerHTML = title;
+    }
   });
 </script>
 

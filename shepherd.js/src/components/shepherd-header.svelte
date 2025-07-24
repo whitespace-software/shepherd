@@ -1,9 +1,10 @@
-<script>
+<script lang="typescript">
+  import { Step, type StepOptionsCancelIcon, type StringOrStringFunction } from 'src/step';
   import ShepherdCancelIcon from './shepherd-cancel-icon.svelte';
   import ShepherdTitle from './shepherd-title.svelte';
 
-  export let labelId, step;
-  let title, cancelIcon;
+  export let labelId: string, step: Step;
+  let title: StringOrStringFunction | undefined, cancelIcon: StepOptionsCancelIcon | undefined;
 
   $: {
     title = step.options.title;
