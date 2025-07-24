@@ -38,6 +38,11 @@ export interface TourOptions {
    * The message to display in the `window.confirm` dialog.
    */
   confirmCancelMessage?: string;
+
+
+  cancelOnOutsideClick?: boolean;
+  cancelOnMouseLeave?: boolean;
+
   /**
    * The prefix to add to the `shepherd-enabled` and `shepherd-target` class names as well as the `data-shepherd-step-id`.
    */
@@ -425,6 +430,23 @@ export class Tour extends Evented {
         styles: this.styles
       }
     });
+
+    console.log(`SETUP MODAL: ${this.options.tourName}`);
+    console.log(`CANCEL ON OUTSIDE CLICK: ${this.options.cancelOnOutsideClick}`);
+    console.log(`CANCEL ON MOUSE LEAVE: ${this.options.cancelOnMouseLeave}`);
+
+    if (this.options.cancelOnOutsideClick) {
+      document.getElementById("tourModalOverlay")?.addEventListener("click", () => {
+        this.cancel();
+      }, { once: true });
+    }
+
+    if (this.options.cancelOnMouseLeave) {
+      document.getElementById("tourModalOverlay")?.addEventListener("mouseenter", () => {
+        this.cancel();
+      }, { once: true });
+    }
+
   }
 
   /**

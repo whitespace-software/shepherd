@@ -248,6 +248,7 @@
 
 <svg
   bind:this={element}
+  id="tourModalOverlay"
   class={`${
     modalIsVisible ? 'shepherd-modal-is-visible' : ''
   } shepherd-modal-overlay-container`}
