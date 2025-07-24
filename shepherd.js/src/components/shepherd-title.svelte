@@ -1,8 +1,8 @@
-<script>
+<script lang="typescript">
   import { afterUpdate } from 'svelte';
   import { isFunction } from '../utils/type-check.ts';
 
-  export let labelId, element, title;
+  export let labelId: string, element: HTMLElement, title: string | (() => string);
 
   afterUpdate(() => {
     if (isFunction(title)) {
