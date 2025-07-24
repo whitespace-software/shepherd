@@ -14,7 +14,7 @@ import {
   destroyTooltip,
   mergeTooltipConfig
 } from './utils/floating-ui.ts';
-// @ts-expect-error TODO: we don't have Svelte .d.ts files until we generate the dist
+// ----@ts-expect-error TODO: we don't have Svelte .d.ts files until we generate the dist
 import ShepherdElement from './components/shepherd-element.svelte';
 import { type Tour } from './tour.ts';
 
@@ -41,7 +41,7 @@ export interface StepOptions {
    * });
    * ```
    *
-   * If you don’t specify an attachTo the element will appear in the middle of the screen.
+   * If you don't specify an attachTo the element will appear in the middle of the screen.
    * If you omit the `on` portion of `attachTo`, the element will still be highlighted, but the tooltip will appear
    * in the middle of the screen, without an arrow pointing to the target.
    */
@@ -56,7 +56,7 @@ export interface StepOptions {
    *   ...moreOptions
    * });
    * ```
-   * `event` doesn’t have to be an event inside the tour, it can be any event fired on any element on the page.
+   * `event` doesn't have to be an event inside the tour, it can be any event fired on any element on the page.
    * You can also always manually advance the Tour by calling `myTour.next()`.
    */
   advanceOn?: StepOptionsAdvanceOn;
@@ -79,7 +79,7 @@ export interface StepOptions {
   buttons?: ReadonlyArray<StepOptionsButton>;
 
   /**
-   * Should a cancel “✕” be shown in the header of the step?
+   * Should a cancel "✕" be shown in the header of the step?
    */
   cancelIcon?: StepOptionsCancelIcon;
 
