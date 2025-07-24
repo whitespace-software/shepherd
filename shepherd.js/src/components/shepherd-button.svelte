@@ -1,8 +1,9 @@
-<script>
+<script lang="typescript">
+    import { Step, type StringOrStringFunction } from 'src/step.ts';
   import { isFunction } from '../utils/type-check.ts';
 
-  export let config, step;
-  let action, classes, disabled, label, secondary, text;
+  export let config, step: Step;
+  let action: () => void, classes: string, disabled: boolean, label: string, secondary: boolean, text: string;
 
   $: {
     action = config.action ? config.action.bind(step.tour) : null;
@@ -13,7 +14,7 @@
     text = config.text ? getConfigOption(config.text) : null;
   }
 
-  function getConfigOption(option) {
+  function getConfigOption(option: unknown) {
     if (isFunction(option)) {
       return (option = option.call(step));
     }
