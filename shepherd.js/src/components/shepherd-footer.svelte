@@ -1,7 +1,8 @@
-<script>
+<script lang="typescript">
+  import { Step } from 'src/step';
   import ShepherdButton from './shepherd-button.svelte';
 
-  export let step;
+  export let step: Step;
 
   $: buttons = step.options.buttons;
 </script>
