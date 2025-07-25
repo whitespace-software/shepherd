@@ -9,7 +9,7 @@
   const LEFT_ARROW = "ArrowLeft";
   const RIGHT_ARROW = "ArrowRight";
 
-  export let classPrefix: string,
+  export let classPrefix: string | undefined,
     element: HTMLElement | undefined = undefined,
     descriptionId: string,
     firstFocusableElement: HTMLElement | undefined,
