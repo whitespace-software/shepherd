@@ -435,10 +435,6 @@ export class Tour extends Evented {
       }
     });
 
-    console.log(`SETUP MODAL: ${this.options.tourName}`);
-    console.log(`CANCEL ON OUTSIDE CLICK: ${this.options.cancelOnOutsideClick}`);
-    console.log(`CANCEL ON MOUSE LEAVE: ${this.options.cancelOnMouseLeave}`);
-
     if (this.options.cancelOnOutsideClick) {
       document.getElementById("tourModalOverlay")?.addEventListener("click", () => {
         this.cancel();
