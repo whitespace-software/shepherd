@@ -4,8 +4,20 @@
   import ShepherdText from './shepherd-text.svelte';
   import { isUndefined } from '../utils/type-check.ts';
   import { Step } from 'src/step.ts';
+  import  { Tour } from 'src/tour.ts';
 
   export let descriptionId: string, labelId: string, step: Step;
+
+  let tour: Tour;
+  let progressBarEnabled: boolean;
+  let showFooter: boolean;
+
+  $: {
+    tour = step.getTour();
+    progressBarEnabled = !!tour.options.enableProgressBar;
+    showFooter = progressBarEnabled || (Array.isArray(step.options.buttons) && step.options.buttons.length > 0);
+  }
+
 </script>
 
 <div class="shepherd-content">
@@ -17,8 +29,8 @@
     <ShepherdText {descriptionId} {step} />
   {/if}
 
-  {#if Array.isArray(step.options.buttons) && step.options.buttons.length}
-    <ShepherdFooter {step} />
+  {#if showFooter}
+    <ShepherdFooter {step} showProgressbar={progressBarEnabled}/>
   {/if}
 </div>
 

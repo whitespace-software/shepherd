@@ -42,7 +42,7 @@
     border-radius: 3px;
     color: rgba(255, 255, 255, 0.75);
     cursor: pointer;
-    margin-right: 0.5rem;
+    /* margin-right: 0.5rem; */
     padding: 0.5rem 1.5rem;
     transition: all 0.5s ease;
   }

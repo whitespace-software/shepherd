@@ -255,6 +255,8 @@ export interface StepOptionsButton {
    * The HTML text of the button
    */
   text?: StringOrStringFunction;
+
+  position?: "left" | "right";
 }
 
 export interface StepOptionsButtonEvent {

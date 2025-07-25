@@ -39,6 +39,7 @@ export interface TourOptions {
    */
   confirmCancelMessage?: string;
 
+  enableProgressBar?: boolean;
 
   cancelOnOutsideClick?: boolean;
   cancelOnMouseLeave?: boolean;
