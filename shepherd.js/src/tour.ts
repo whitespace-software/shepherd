@@ -90,6 +90,9 @@ export interface TourOptions {
    * can remain interactive
    */
   useModalOverlay?: boolean;
+
+  overlayOpacity?: number;
+
 }
 
 export class ShepherdBase extends Evented {
@@ -426,6 +429,7 @@ export class Tour extends Evented {
     this.modal = new ShepherdModal({
       target: this.options.modalContainer || document.body,
       props: {
+        overlayOpacity: this.options.overlayOpacity,
         // @ts-expect-error TODO: investigate where styles comes from
         styles: this.styles
       }

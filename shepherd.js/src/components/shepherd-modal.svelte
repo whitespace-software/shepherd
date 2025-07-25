@@ -2,7 +2,7 @@
   import  { Step } from 'src/step.ts';
   import { makeOverlayPath, type OverlayPathParams } from '../utils/overlay-path.ts';
 
-  export let element: SVGSVGElement, openingProperties: OverlayPathParams;
+  export let element: SVGSVGElement, openingProperties: OverlayPathParams, overlayOpacity: number = 0.5;
   let modalIsVisible = false;
   let rafId: number | undefined = undefined;
   let pathDefinition: string;
@@ -253,6 +253,7 @@
   class={`${
     modalIsVisible ? 'shepherd-modal-is-visible' : ''
   } shepherd-modal-overlay-container`}
+  style="--opacity: {overlayOpacity}"
   on:touchmove={_preventModalOverlayTouch}
 >
   <path d={pathDefinition} />
@@ -277,7 +278,8 @@
 
   .shepherd-modal-overlay-container.shepherd-modal-is-visible {
     height: 100vh;
-    opacity: 0.5;
+    /* opacity: 0.5; */
+    opacity: var(--opacity);
     transition:
       all 0.3s ease-out,
       height 0s 0s,
