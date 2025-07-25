@@ -103,7 +103,7 @@ function setPosition(
       )
       // Replaces focusAfterRender modifier.
       .then((step: Step) => {
-        if (step?.el) {
+        if (step?.el && step.options.autoFocus) {
           step.el.focus({ preventScroll: true });
         }
       })

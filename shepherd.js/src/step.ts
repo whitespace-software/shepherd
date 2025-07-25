@@ -141,6 +141,8 @@ export interface StepOptions {
    */
   scrollTo?: boolean | ScrollIntoViewOptions;
 
+  autoFocus?: boolean
+
   /**
    * A function that lets you override the default scrollTo behavior and
    * define a custom action to do the scrolling, and possibly other logic.
