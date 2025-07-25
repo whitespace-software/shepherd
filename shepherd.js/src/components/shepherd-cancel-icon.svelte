@@ -1,10 +1,13 @@
-<script>
-  export let cancelIcon, step;
+<script lang="typescript">
+  import type { StepOptionsCancelIcon } from "src/step";
+  import { Step } from "src/step";
+
+  export let cancelIcon: StepOptionsCancelIcon, step: Step;
 
   /**
    * Add a click listener to the cancel link that cancels the tour
    */
-  const handleCancelClick = (e) => {
+  const handleCancelClick = (e: Event) => {
     e.preventDefault();
     step.cancel();
   };
