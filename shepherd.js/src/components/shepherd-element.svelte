@@ -1,31 +1,32 @@
-<script>
+<script lang="typescript">
   import { onMount, afterUpdate } from 'svelte';
   import ShepherdContent from './shepherd-content.svelte';
   import { isUndefined, isString } from '../utils/type-check.ts';
+  import { Step } from 'src/step.ts';
 
-  const KEY_TAB = 9;
-  const KEY_ESC = 27;
-  const LEFT_ARROW = 37;
-  const RIGHT_ARROW = 39;
+  const KEY_TAB = "Tab";
+  const KEY_ESC = "Escape";
+  const LEFT_ARROW = "ArrowLeft";
+  const RIGHT_ARROW = "ArrowRight";
 
-  export let classPrefix,
-    element,
-    descriptionId,
-    firstFocusableElement,
-    focusableElements,
-    labelId,
-    lastFocusableElement,
-    step,
-    dataStepId;
+  export let classPrefix: string,
+    element: HTMLElement | undefined = undefined,
+    descriptionId: string,
+    firstFocusableElement: HTMLElement | undefined,
+    focusableElements: HTMLElement[],
+    labelId: string,
+    lastFocusableElement: HTMLElement | undefined,
+    step: Step,
+    dataStepId: {[key: string]: string};
 
-  let hasCancelIcon, hasTitle, classes;
+  let hasCancelIcon: boolean, hasTitle: boolean, classes: string;
 
   $: {
     hasCancelIcon =
-      step.options &&
+      !!(step.options &&
       step.options.cancelIcon &&
-      step.options.cancelIcon.enabled;
-    hasTitle = step.options && step.options.title;
+      step.options.cancelIcon.enabled);
+    hasTitle = !!(step.options && step.options.title);
   }
 
   export const getElement = () => element;
@@ -33,11 +34,17 @@
   onMount(() => {
     // Get all elements that are focusable
     dataStepId = { [`data-${classPrefix}shepherd-step-id`]: step.id };
-    focusableElements = element.querySelectorAll(
-      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
-    );
-    firstFocusableElement = focusableElements[0];
-    lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+    if(element){
+      focusableElements = Array.from(element.querySelectorAll(
+        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
+      ));
+
+      firstFocusableElement = focusableElements[0];
+      lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+    }
+
   });
 
   afterUpdate(() => {
@@ -48,29 +55,29 @@
 
   function updateDynamicClasses() {
     removeClasses(classes);
-    classes = step.options.classes;
+    classes = step.options.classes ?? "";
     addClasses(classes);
   }
 
-  function removeClasses(classes) {
+  function removeClasses(classes: string) {
     if (isString(classes)) {
       const oldClasses = getClassesArray(classes);
-      if (oldClasses.length) {
+      if (element && oldClasses.length) {
         element.classList.remove(...oldClasses);
       }
     }
   }
 
-  function addClasses(classes) {
+  function addClasses(classes: string) {
     if (isString(classes)) {
       const newClasses = getClassesArray(classes);
-      if (newClasses.length) {
+      if (element && newClasses.length) {
         element.classList.add(...newClasses);
       }
     }
   }
 
-  function getClassesArray(classes) {
+  function getClassesArray(classes: string) {
     return classes.split(' ').filter((className) => !!className.length);
   }
 
@@ -81,9 +88,9 @@
    *
    * @private
    */
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     const { tour } = step;
-    switch (e.keyCode) {
+    switch (e.key) {
       case KEY_TAB:
         if (focusableElements.length === 0) {
           e.preventDefault();
@@ -93,15 +100,15 @@
         if (e.shiftKey) {
           if (
             document.activeElement === firstFocusableElement ||
-            document.activeElement.classList.contains('shepherd-element')
+            document.activeElement?.classList.contains('shepherd-element')
           ) {
             e.preventDefault();
-            lastFocusableElement.focus();
+            lastFocusableElement?.focus();
           }
         } else {
           if (document.activeElement === lastFocusableElement) {
             e.preventDefault();
-            firstFocusableElement.focus();
+            firstFocusableElement?.focus();
           }
         }
         break;
@@ -132,6 +139,8 @@
   };
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <div
   aria-describedby={!isUndefined(step.options.text) ? descriptionId : null}
   aria-labelledby={step.options.title ? labelId : null}
