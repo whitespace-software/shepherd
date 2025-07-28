@@ -52,4 +52,9 @@
   .shepherd-text p:last-child {
     margin-bottom: 0;
   }
+
+  .shepherd-text ul {
+    list-style: disc;
+  }
+
 </style>
