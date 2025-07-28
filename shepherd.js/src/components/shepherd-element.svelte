@@ -239,4 +239,9 @@
   .shepherd-target-click-disabled.shepherd-enabled.shepherd-target * {
     pointer-events: none;
   }
+
+  .shepherd-large-container {
+    max-width: 600px;
+  }
+
 </style>
