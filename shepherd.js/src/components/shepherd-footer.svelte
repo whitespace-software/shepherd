@@ -1,29 +1,22 @@
 <script lang="typescript">
   import { Step, type StepOptionsButton } from 'src/step';
   import ShepherdButton from './shepherd-button.svelte';
-  import { Tour } from 'src/tour';
+  import ShepherdProgress from './shepherd-progress.svelte';
 
   export let step: Step, showProgressbar: boolean;
 
   // $: buttons = step.options.buttons;
 
-  let tour: Tour;
   let buttons: readonly StepOptionsButton[] | undefined;
   let leftButtons: StepOptionsButton[] | undefined;
   let rightButtons: StepOptionsButton[] | undefined;
-  let progressBarText: string = "";
-  let currentStepIndex: number;
 
   $: {
 
-    tour = step.getTour();
     buttons = step.options.buttons;
 
     leftButtons = buttons?.filter(btn => btn.position === "left");
     rightButtons = buttons?.filter(btn => btn.position === "right");
-
-    currentStepIndex = tour.steps.findIndex(s => s.id === step.id);
-    progressBarText = currentStepIndex !== -1 ? `${currentStepIndex + 1} of ${tour.steps.length}` : "";
 
   }
 
@@ -45,9 +38,11 @@
   {/if}
 
   {#if showProgressbar}
-    <span class="ws-progress-bar">
-      {progressBarText}
-    </span>
+
+    <div class="progress-wrapper">
+      <ShepherdProgress step={step}/>
+    </div>
+
   {/if}
 
 
@@ -80,7 +75,7 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .footer-group:has(.ws-progress-bar){
+  .footer-group:has(.progress-wrapper){
     grid-template-areas: "left-group progress right-group";
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -91,7 +86,7 @@
     place-self: center start;
   }
 
-  .ws-progress-bar {
+  .progress-wrapper {
     grid-area: progress;
     place-self: center;
   }
