@@ -164,7 +164,7 @@
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+    max-width: 560px;
     opacity: 0;
     outline: none;
     transition:
@@ -241,7 +241,14 @@
   }
 
   .shepherd-large-container {
-    max-width: 600px;
+    max-width: 660px;
+    max-height: 650px;
   }
+
+  .shepherd-extra-large-container {
+    max-width: 750px;
+    max-height: 750px;
+  }
+
 
 </style>
