@@ -5,6 +5,7 @@
   import { isUndefined } from '../utils/type-check.ts';
   import { Step } from 'src/step.ts';
   import  { Tour } from 'src/tour.ts';
+  import ShepherdImage from './shepherd-image.svelte';
 
   export let descriptionId: string, labelId: string, step: Step;
 
@@ -28,6 +29,11 @@
   {#if !isUndefined(step.options.text)}
     <ShepherdText {descriptionId} {step} />
   {/if}
+
+
+  <!-- {#if step.options.image}
+    <ShepherdImage step={step}></ShepherdImage>
+  {/if} -->
 
   {#if showFooter}
     <ShepherdFooter {step} showProgressbar={progressBarEnabled}/>

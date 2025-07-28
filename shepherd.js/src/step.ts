@@ -186,6 +186,10 @@ export interface StepOptions {
    * ```
    */
   when?: StepOptionsWhen;
+
+  image?: StepOptionsImage;
+  video?: StepOptionsVideo;
+
 }
 
 export type PopperPlacement =
@@ -271,6 +275,22 @@ export interface StepOptionsCancelIcon {
 export interface StepOptionsWhen {
   [key: string]: (this: Step) => void;
 }
+
+export interface StepOptionsImage {
+  url: string;
+  position?: string;
+  width: number;
+  height: number;
+  classes?: string;
+}
+
+export interface StepOptionsVideo {
+  url: string;
+  width: number;
+  height: number;
+  classes?: string;
+}
+
 
 /**
  * A class representing steps to be added to a tour.

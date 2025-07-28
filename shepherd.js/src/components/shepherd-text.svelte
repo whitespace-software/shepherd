@@ -2,8 +2,12 @@
   import { afterUpdate } from 'svelte';
   import { isHTMLElement, isFunction, isString } from '../utils/type-check.ts';
   import type { Step } from 'src/step.ts';
+  import ShepherdImage from './shepherd-image.svelte';
+    import ShepherdVideo from './shepherd-video.svelte';
 
   export let descriptionId: string, element: HTMLElement | undefined = undefined, step: Step;
+
+  let textHTML: string;
 
   afterUpdate(() => {
     let { text } = step.options;
@@ -27,15 +31,32 @@
     if(isHTMLElement(text)){
       element.appendChild(text);
     } else if(isString(text)){
-      element.innerHTML = text;
+      // element.innerHTML = text;
+      textHTML = text
     } else if(Array.isArray(text)) {
-      element.innerHTML = text.join("")
+      // element.innerHTML = text.join("")
+      textHTML = text.join("");
     }
 
   });
 </script>
 
-<div bind:this={element} class="shepherd-text" id={descriptionId}></div>
+<div bind:this={element} class="shepherd-text" id={descriptionId}>
+  {@html textHTML}
+
+  {#if step.options.image}
+    <ShepherdImage step={step}></ShepherdImage>
+  {/if}
+
+  {#if step.options.video}
+    <ShepherdVideo step={step}></ShepherdVideo>
+  {/if}
+
+</div>
+
+<!-- {#if step.options.image}
+  <ShepherdImage step={step}></ShepherdImage>
+{/if} -->
 
 <style global>
   .shepherd-text {
