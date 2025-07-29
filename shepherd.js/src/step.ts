@@ -429,7 +429,7 @@ export class Step extends Evented {
     if (isFunction(this.options.beforeShowPromise)) {
       return Promise.resolve(this.options.beforeShowPromise()).then(() =>
         this._show()
-      );
+      ).catch(() => this.cancel());
     }
     return Promise.resolve(this._show());
   }
