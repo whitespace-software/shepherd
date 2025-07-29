@@ -10,6 +10,11 @@
   let buttons: readonly StepOptionsButton[] | undefined;
   let leftButtons: StepOptionsButton[] | undefined;
   let rightButtons: StepOptionsButton[] | undefined;
+  let addtionalButtons: StepOptionsButton[] | undefined;
+  
+  let showPrimaryRow: boolean;
+  let showSecondaryRow: boolean;
+
 
   $: {
 
@@ -17,6 +22,13 @@
 
     leftButtons = buttons?.filter(btn => btn.position === "left");
     rightButtons = buttons?.filter(btn => btn.position === "right");
+    addtionalButtons = buttons?.filter(btn => !btn.position);
+
+    const hasLeftButtons = !!leftButtons && leftButtons.length > 0;
+    const hasRightButtons = !!rightButtons && rightButtons.length > 0;
+
+    showPrimaryRow = showProgressbar || hasLeftButtons || hasRightButtons;
+    showSecondaryRow = !!addtionalButtons && addtionalButtons.length > 0;
 
   }
 
@@ -29,30 +41,39 @@
     {/each}
   {/if} -->
 
-  {#if leftButtons}
-    <div class="left-button-group">
-      {#each leftButtons as leftButton}
-        <ShepherdButton config={leftButton} step={step} />
+
+  {#if !!addtionalButtons && addtionalButtons.length > 0 }
+    <div class="secondary-row">
+      {#each addtionalButtons as addtionalBtn}
+        <ShepherdButton config={addtionalBtn} step={step} />
       {/each}
     </div>
   {/if}
 
-  {#if showProgressbar}
-
-    <div class="progress-wrapper">
-      <ShepherdProgress step={step}/>
-    </div>
-
+  {#if showPrimaryRow}
+     <div class="primary-row">
+       {#if leftButtons}
+         <div class="left-button-group">
+           {#each leftButtons as leftButton}
+             <ShepherdButton config={leftButton} step={step} />
+           {/each}
+         </div>
+       {/if}
+       {#if showProgressbar}
+         <div class="progress-wrapper">
+           <ShepherdProgress step={step}/>
+         </div>
+       {/if}
+       {#if rightButtons}
+         <div class="right-button-group">
+           {#each rightButtons as rightButton}
+             <ShepherdButton config={rightButton} step={step} />
+           {/each}
+         </div>
+       {/if}
+     </div>
   {/if}
 
-
-  {#if rightButtons}
-    <div class="right-button-group">
-      {#each rightButtons as rightButton}
-        <ShepherdButton config={rightButton} step={step} />
-      {/each}
-    </div>
-  {/if}
 
 </footer>
 
@@ -63,19 +84,24 @@
     /* display: flex;
     justify-content: flex-end; */
     padding: 0 0.75rem 0.75rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
   }
 
   /* .shepherd-footer .shepherd-button:last-child {
     margin-right: 0;
   } */
 
-  .footer-group {
+  .primary-row {
     display: grid;
     grid-template-areas: "left-group right-group";
     grid-template-columns: 1fr 1fr;
   }
 
-  .footer-group:has(.progress-wrapper){
+  .primary-row:has(.progress-wrapper){
     grid-template-areas: "left-group progress right-group";
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -96,6 +122,13 @@
     place-self: center end;
   }
 
+
+  .secondary-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
 
 
 
