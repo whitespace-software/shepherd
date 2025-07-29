@@ -106,15 +106,24 @@
     grid-template-columns: 1fr 1fr 1fr;
   }
 
+  .left-button-group,
+  .right-button-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
 
   .left-button-group {
     grid-area: left-group;
     place-self: center start;
+    justify-content: flex-start;
   }
 
   .progress-wrapper {
     grid-area: progress;
     place-self: center;
+    justify-content: flex-end;
   }
 
   .right-button-group {
