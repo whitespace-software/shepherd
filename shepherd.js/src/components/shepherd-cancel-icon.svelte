@@ -13,13 +13,22 @@
   };
 </script>
 
-<button
+<!-- <button
   aria-label={cancelIcon.label ? cancelIcon.label : 'Close Tour'}
   class="shepherd-cancel-icon"
   on:click={handleCancelClick}
   type="button"
 >
   <span aria-hidden="true">&times;</span>
+</button> -->
+
+<button
+  aria-label={cancelIcon.label ? cancelIcon.label : "Close Tour"}
+  class="shepherd-text-cancel"
+  on:click={handleCancelClick}
+  type="button"
+>
+  Dismiss
 </button>
 
 <style global>
@@ -46,4 +55,18 @@
   .shepherd-has-title .shepherd-content .shepherd-cancel-icon:hover {
     color: rgba(0, 0, 0, 0.75);
   }
+
+  .shepherd-text-cancel {
+    background-color: transparent;
+    border: none;
+
+    color: var(--tour-primary);
+
+    font-family: var(--tour-font);
+    font-size: 0.875rem;
+    font-weight: 400;
+
+    cursor: pointer;
+  }
+
 </style>
