@@ -1,8 +1,8 @@
 <script lang="typescript">
-  import { onMount, afterUpdate } from 'svelte';
-  import ShepherdContent from './shepherd-content.svelte';
-  import { isUndefined, isString } from '../utils/type-check.ts';
-  import { Step } from 'src/step.ts';
+  import { onMount, afterUpdate } from "svelte";
+  import ShepherdContent from "./shepherd-content.svelte";
+  import { isUndefined, isString } from "../utils/type-check.ts";
+  import { Step } from "src/step.ts";
 
   const KEY_TAB = "Tab";
   const KEY_ESC = "Escape";
@@ -17,15 +17,16 @@
     labelId: string,
     lastFocusableElement: HTMLElement | undefined,
     step: Step,
-    dataStepId: {[key: string]: string};
+    dataStepId: { [key: string]: string };
 
   let hasCancelIcon: boolean, hasTitle: boolean, classes: string;
 
   $: {
-    hasCancelIcon =
-      !!(step.options &&
+    hasCancelIcon = !!(
+      step.options &&
       step.options.cancelIcon &&
-      step.options.cancelIcon.enabled);
+      step.options.cancelIcon.enabled
+    );
     hasTitle = !!(step.options && step.options.title);
   }
 
@@ -35,16 +36,16 @@
     // Get all elements that are focusable
     dataStepId = { [`data-${classPrefix}shepherd-step-id`]: step.id };
 
-    if(element){
-      focusableElements = Array.from(element.querySelectorAll(
-        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
-      ));
+    if (element) {
+      focusableElements = Array.from(
+        element.querySelectorAll(
+          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
+        )
+      );
 
       firstFocusableElement = focusableElements[0];
       lastFocusableElement = focusableElements[focusableElements.length - 1];
-
     }
-
   });
 
   afterUpdate(() => {
@@ -78,7 +79,7 @@
   }
 
   function getClassesArray(classes: string) {
-    return classes.split(' ').filter((className) => !!className.length);
+    return classes.split(" ").filter((className) => !!className.length);
   }
 
   /**
@@ -100,7 +101,7 @@
         if (e.shiftKey) {
           if (
             document.activeElement === firstFocusableElement ||
-            document.activeElement?.classList.contains('shepherd-element')
+            document.activeElement?.classList.contains("shepherd-element")
           ) {
             e.preventDefault();
             lastFocusableElement?.focus();
@@ -160,19 +161,24 @@
 </div>
 
 <style global>
-
   @font-face {
-    font-family: 'Material Symbols Outlined';
+    font-family: "Material Symbols Outlined";
     font-style: normal;
-    src: 
-      url('/assets/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2') format('woff2'),
-      url('/assets/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].ttf') format('truetype');
+    src:
+      url("/assets/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2")
+        format("woff2"),
+      url("/assets/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].ttf")
+        format("truetype");
   }
 
   .shepherd-material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
+    font-family: "Material Symbols Outlined";
     font-weight: normal;
-    font-variation-settings: "FILL" 0,"wght" 200,"GRAD" 0,"opsz" 24;
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 200,
+      "GRAD" 0,
+      "opsz" 24;
     font-style: normal;
     font-size: 24px;
     display: inline-block;
@@ -182,6 +188,36 @@
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
+  }
+
+  :root {
+    --tour-primary: #007bff;
+
+    --tour-grey-darkest: #212529;
+    --tour-grey-dark: #60637c;
+    --tour-grey-mid-darkest: #6c757d;
+    --tour-grey-mid-dark: #888888;
+    --tour-grey-mid: #c7c9d6;
+    --tour-grey-mid-light: #d6d6d6;
+    --tour-grey-light: #efeff4;
+    --tour-grey-lightest: #f8f9fa;
+
+    --tour-blue-darkest: #1f3674;
+    --tour-blue-dark: #004bb2;
+    --tour-blue-mid: var(--tour-primary);
+    --tour-blue-light: #6ea9ff;
+    --tour-blue-lightest: #f1f6ff;
+
+    --tour-success: #34c759;
+    --tour-cyan: #17a2b8;
+
+    --tour-header-bg: var(--tour-grey-lightest);
+    --tour-badge-bg: #ecf1ff;
+    --tour-pointer-bg: white;
+
+    --tour-btn-active-shadow-col: #6161624d;
+
+    --tour-font: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
 
   .shepherd-element {
@@ -226,24 +262,24 @@
   }
 
   .shepherd-arrow:before {
-    content: '';
+    content: "";
     transform: rotate(45deg);
     background: #fff;
   }
 
-  .shepherd-element[data-popper-placement^='top'] > .shepherd-arrow {
+  .shepherd-element[data-popper-placement^="top"] > .shepherd-arrow {
     bottom: -8px;
   }
 
-  .shepherd-element[data-popper-placement^='bottom'] > .shepherd-arrow {
+  .shepherd-element[data-popper-placement^="bottom"] > .shepherd-arrow {
     top: -8px;
   }
 
-  .shepherd-element[data-popper-placement^='left'] > .shepherd-arrow {
+  .shepherd-element[data-popper-placement^="left"] > .shepherd-arrow {
     right: -8px;
   }
 
-  .shepherd-element[data-popper-placement^='right'] > .shepherd-arrow {
+  .shepherd-element[data-popper-placement^="right"] > .shepherd-arrow {
     left: -8px;
   }
 
@@ -254,7 +290,7 @@
   /**
   * Arrow on top of tooltip centered horizontally, with title color
   */
-  .shepherd-element.shepherd-has-title[data-popper-placement^='bottom']
+  .shepherd-element.shepherd-has-title[data-popper-placement^="bottom"]
     > .shepherd-arrow::before {
     background-color: #e6e6e6;
   }
@@ -273,6 +309,4 @@
     max-width: 750px;
     max-height: 750px;
   }
-
-
 </style>

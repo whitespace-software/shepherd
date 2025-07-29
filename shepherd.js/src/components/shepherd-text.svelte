@@ -60,10 +60,11 @@
 
 <style global>
   .shepherd-text {
-    color: rgba(0, 0, 0, 0.75);
-    font-size: 1rem;
-    line-height: 1.3em;
-    padding: 0.75em;
+    columns: var(--tour-grey-darkest);
+    background-color: white;
+    font-size: 0.875rem;
+    /* line-height: 1.3em; */
+    padding: 1rem 1.5rem;
   }
 
   .shepherd-text p {

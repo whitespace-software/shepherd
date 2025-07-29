@@ -20,12 +20,15 @@
 
 <style global>
   .shepherd-title {
-    color: rgba(0, 0, 0, 0.75);
     display: flex;
-    font-size: 1rem;
-    font-weight: normal;
     flex: 1 0 auto;
+
     margin: 0;
     padding: 0;
+
+    color: var(--tour-grey-darkest);
+    font-family: var(--tour-font);
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 </style>
