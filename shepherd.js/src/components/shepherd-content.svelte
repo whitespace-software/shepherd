@@ -42,7 +42,7 @@
 
 <style global>
   .shepherd-content {
-    border-radius: 5px;
+    /* border-radius: 5px; */
     outline: none;
     padding: 0;
   }

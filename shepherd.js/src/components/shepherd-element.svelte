@@ -247,6 +247,24 @@
   }
 
   .shepherd-element,
+  .shepherd-header,
+  .shepherd-footer,
+  .shepherd-content {
+    border-radius: 0.75rem;
+  }
+
+  .shepherd-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .shepherd-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+
+  .shepherd-element,
   .shepherd-element *,
   .shepherd-element *:after,
   .shepherd-element *:before {
