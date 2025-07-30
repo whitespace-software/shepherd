@@ -36,8 +36,6 @@
     justify-content: flex-end;
     align-items: center;
 
-    line-height: 2em;
-
     padding: 0.75rem 0.75rem 0;
 
   }

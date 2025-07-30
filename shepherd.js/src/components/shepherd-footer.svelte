@@ -83,7 +83,9 @@
     border-bottom-right-radius: 5px;
     /* display: flex;
     justify-content: flex-end; */
-    padding: 0 0.75rem 0.75rem;
+    padding: 0.5rem 1rem;
+
+    border-top: 1px solid var(--tour-grey-light);
 
     display: flex;
     flex-direction: column;
