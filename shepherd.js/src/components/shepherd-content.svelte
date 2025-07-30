@@ -5,7 +5,6 @@
   import { isUndefined } from '../utils/type-check.ts';
   import { Step } from 'src/step.ts';
   import  { Tour } from 'src/tour.ts';
-  import ShepherdImage from './shepherd-image.svelte';
 
   export let descriptionId: string, labelId: string, step: Step;
 
@@ -45,5 +44,9 @@
     /* border-radius: 5px; */
     outline: none;
     padding: 0;
+    overflow: hidden;
+
+    box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, .05);
+
   }
 </style>

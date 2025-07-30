@@ -223,7 +223,9 @@
   .shepherd-element {
     background: #fff;
     border-radius: 5px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); */
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,.2));
+
     max-width: 560px;
     opacity: 0;
     outline: none;
