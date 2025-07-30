@@ -284,7 +284,8 @@
   .shepherd-arrow:before {
     content: "";
     transform: rotate(45deg);
-    background: #fff;
+    background-color: var(--tour-pointer-bg);
+    --arrow-border-radius: 0.25rem;
   }
 
   .shepherd-element[data-popper-placement^="top"] > .shepherd-arrow {
@@ -307,12 +308,17 @@
     opacity: 0;
   }
 
-  /**
-  * Arrow on top of tooltip centered horizontally, with title color
-  */
-  .shepherd-element.shepherd-has-title[data-popper-placement^="bottom"]
-    > .shepherd-arrow::before {
-    background-color: #e6e6e6;
+  .shepherd-element.shepherd-has-title[data-popper-placement^='top'] > .shepherd-arrow::before {
+    border-bottom-right-radius: var(--arrow-border-radius);
+  }
+  .shepherd-element.shepherd-has-title[data-popper-placement^='bottom'] > .shepherd-arrow::before {
+    border-top-left-radius: var(--arrow-border-radius);
+  }
+  .shepherd-element.shepherd-has-title[data-popper-placement^='left'] > .shepherd-arrow::before {
+    border-top-right-radius: var(--arrow-border-radius);
+  }
+  .shepherd-element.shepherd-has-title[data-popper-placement^='right'] > .shepherd-arrow::before {
+    border-bottom-left-radius: var(--arrow-border-radius);
   }
 
   .shepherd-target-click-disabled.shepherd-enabled.shepherd-target,
