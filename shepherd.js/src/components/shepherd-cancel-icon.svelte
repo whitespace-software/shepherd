@@ -32,7 +32,7 @@
 </button>
 
 <style global>
-  .shepherd-cancel-icon {
+  /* .shepherd-cancel-icon {
     background: transparent;
     border: none;
     color: rgba(128, 128, 128, 0.75);
@@ -42,9 +42,9 @@
     margin: 0;
     padding: 0;
     transition: color 0.5s ease;
-  }
+  } */
 
-  .shepherd-cancel-icon:hover {
+  /* .shepherd-cancel-icon:hover {
     color: rgba(0, 0, 0, 0.75);
   }
 
@@ -54,7 +54,7 @@
 
   .shepherd-has-title .shepherd-content .shepherd-cancel-icon:hover {
     color: rgba(0, 0, 0, 0.75);
-  }
+  } */
 
   .shepherd-text-cancel {
     background-color: transparent;
@@ -66,7 +66,11 @@
     font-size: 0.875rem;
     font-weight: 400;
 
+    /* padding-inline: 0.75rem; */
+
     cursor: pointer;
   }
+
+
 
 </style>

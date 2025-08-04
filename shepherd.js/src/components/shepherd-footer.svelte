@@ -51,28 +51,29 @@
   {/if}
 
   {#if showPrimaryRow}
-     <div class="primary-row">
-       {#if leftButtons}
-         <div class="left-button-group">
-           {#each leftButtons as leftButton}
-             <ShepherdButton config={leftButton} step={step} />
-           {/each}
-         </div>
-       {/if}
-       {#if showProgressbar}
-         <div class="progress-wrapper">
-           <ShepherdProgress step={step}/>
-         </div>
-       {/if}
-       {#if rightButtons}
-         <div class="right-button-group">
-           {#each rightButtons as rightButton}
-             <ShepherdButton config={rightButton} step={step} />
-           {/each}
-         </div>
-       {/if}
-     </div>
+      <div class="primary-row">
+        {#if leftButtons}
+          <div class="left-button-group">
+            {#each leftButtons as leftButton}
+              <ShepherdButton config={leftButton} step={step} />
+            {/each}
+          </div>
+        {/if}
+        {#if showProgressbar}
+          <div class="progress-wrapper">
+            <ShepherdProgress step={step}/>
+          </div>
+        {/if}
+        {#if rightButtons}
+          <div class="right-button-group">
+            {#each rightButtons as rightButton}
+              <ShepherdButton config={rightButton} step={step} />
+            {/each}
+          </div>
+        {/if}
+      </div>
   {/if}
+
 
 
 </footer>
@@ -83,9 +84,6 @@
     border-bottom-right-radius: 5px;
     /* display: flex;
     justify-content: flex-end; */
-    padding: 0.5rem 1rem;
-
-    border-top: 1px solid var(--tour-grey-light);
 
     display: flex;
     flex-direction: column;
@@ -93,14 +91,26 @@
 
   }
 
+
+  .primary-row, .secondary-row {
+    padding: 0.5rem 1.5rem;
+  }
+
+
   /* .shepherd-footer .shepherd-button:last-child {
     margin-right: 0;
   } */
+
+  .primary-row:is(:last-child),
+  .secondary-row:is(:last-child) {
+    border-top: 1px solid var(--tour-grey-light);
+  }
 
   .primary-row {
     display: grid;
     grid-template-areas: "left-group right-group";
     grid-template-columns: 1fr 1fr;
+
   }
 
   .primary-row:has(.progress-wrapper){
@@ -131,6 +141,7 @@
   .right-button-group {
     grid-area: right-group;
     place-self: center end;
+    justify-content: flex-end;
   }
 
 
@@ -139,8 +150,16 @@
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
+
+  }
+
+  .secondary-row:has(.right-align) {
+    justify-content: flex-end;
   }
 
 
+  .secondary-row .shepherd-button.full-width {
+    flex: 1;
+  }
 
 </style>

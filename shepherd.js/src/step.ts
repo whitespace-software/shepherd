@@ -260,6 +260,9 @@ export interface StepOptionsButton {
    */
   text?: StringOrStringFunction;
 
+  iconName?: string;
+  iconPosition?: "left" | "right";
+
   position?: "left" | "right";
 }
 
