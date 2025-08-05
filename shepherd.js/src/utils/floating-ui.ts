@@ -45,7 +45,7 @@ export function setupTooltip(step: Step): ComputePositionConfig {
     }
 
     setPosition(target, step, floatingUIOptions, shouldCenter);
-  });
+  }, {animationFrame: true, layoutShift: true});
 
   step.target = attachToOptions.element as HTMLElement;
 
