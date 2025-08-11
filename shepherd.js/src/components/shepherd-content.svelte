@@ -29,11 +29,6 @@
     <ShepherdText {descriptionId} {step} />
   {/if}
 
-
-  <!-- {#if step.options.image}
-    <ShepherdImage step={step}></ShepherdImage>
-  {/if} -->
-
   {#if showFooter}
     <ShepherdFooter {step} showProgressbar={progressBarEnabled}/>
   {/if}
@@ -41,7 +36,6 @@
 
 <style global>
   .shepherd-content {
-    /* border-radius: 5px; */
     outline: none;
     padding: 0;
     overflow: hidden;

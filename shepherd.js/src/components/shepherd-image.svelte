@@ -2,14 +2,7 @@
   import { Step} from 'src/step';
   import { onMount } from 'svelte';
 
-  // export let imageConfig: StepOptionsImage;
   export let step: Step;
-
-  //   export let url;
-  //   export let height;
-  //   export let width;
-  //   export let alt;
-  //   export let classes;
 
   let imageElement: HTMLElement;
   let imageLoaded = false;
@@ -59,12 +52,6 @@
 </div>
 
 <style global>
-  /* .shepherd-content {
-        border-radius: 5px;
-        outline: none;
-        padding: 0;
-        box-shadow: 3px 1px 20px 3px hsl(0deg 0% 0% / 15%);
-    } */
 
   .shepherd-skeleton {
     animation: shepherd-skeleton-loading 1s linear infinite alternate;

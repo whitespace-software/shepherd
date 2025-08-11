@@ -5,8 +5,6 @@
 
   export let step: Step, showProgressbar: boolean;
 
-  // $: buttons = step.options.buttons;
-
   let buttons: readonly StepOptionsButton[] | undefined;
   let leftButtons: StepOptionsButton[] | undefined;
   let rightButtons: StepOptionsButton[] | undefined;
@@ -35,12 +33,6 @@
 </script>
 
 <footer class="shepherd-footer footer-group">
-  <!-- {#if buttons}
-    {#each buttons as config}
-      <ShepherdButton {config} {step} />
-    {/each}
-  {/if} -->
-
 
   {#if !!addtionalButtons && addtionalButtons.length > 0 }
     <div class="secondary-row">
@@ -82,8 +74,6 @@
   .shepherd-footer {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    /* display: flex;
-    justify-content: flex-end; */
 
     display: flex;
     flex-direction: column;
@@ -96,10 +86,6 @@
     padding: 0.5rem 1.5rem;
   }
 
-
-  /* .shepherd-footer .shepherd-button:last-child {
-    margin-right: 0;
-  } */
 
   .primary-row:is(:last-child),
   .secondary-row:is(:last-child) {

@@ -3,7 +3,7 @@
   import { isHTMLElement, isFunction, isString } from '../utils/type-check.ts';
   import type { Step } from 'src/step.ts';
   import ShepherdImage from './shepherd-image.svelte';
-    import ShepherdVideo from './shepherd-video.svelte';
+  import ShepherdVideo from './shepherd-video.svelte';
 
   export let descriptionId: string, element: HTMLElement | undefined = undefined, step: Step;
 
@@ -16,14 +16,6 @@
       text = text.call(step);
     }
 
-    // if (isHTMLElement(text)) {
-    //   element.appendChild(text);
-    // } else if (Array.isArray(text) && text.every(item => isString(item))) {
-    //   element.innerHTML = text.join('');
-    // } else {
-    //   element.innerHTML = text;
-    // }
-
     if(!element){
       return;
     }
@@ -31,10 +23,8 @@
     if(isHTMLElement(text)){
       element.appendChild(text);
     } else if(isString(text)){
-      // element.innerHTML = text;
       textHTML = text
     } else if(Array.isArray(text)) {
-      // element.innerHTML = text.join("")
       textHTML = text.join("");
     }
 
@@ -54,9 +44,6 @@
 
 </div>
 
-<!-- {#if step.options.image}
-  <ShepherdImage step={step}></ShepherdImage>
-{/if} -->
 
 <style global>
   .shepherd-text {
