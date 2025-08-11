@@ -300,7 +300,7 @@ export interface StepOptionsVideo {
  * @extends {Evented}
  */
 export class Step extends Evented {
-  _resolvedAttachTo: StepOptionsAttachTo | null;
+  private _resolvedAttachTo: StepOptionsAttachTo | null;
   classPrefix?: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
   declare cleanup: Function | null;
@@ -399,7 +399,7 @@ export class Step extends Evented {
    * Resolves attachTo options.
    * @returns {{}|{element, on}}
    */
-  _resolveAttachToOptions() {
+  _resolveAttachToOptions(): StepOptionsAttachTo {
     this._resolvedAttachTo = parseAttachTo(this);
     return this._resolvedAttachTo;
   }
@@ -409,7 +409,7 @@ export class Step extends Evented {
    * @returns {{}|{element, on}}
    * @private
    */
-  _getResolvedAttachToOptions() {
+  private _getResolvedAttachToOptions(): StepOptionsAttachTo {
     if (this._resolvedAttachTo === null) {
       return this._resolveAttachToOptions();
     }
@@ -428,7 +428,7 @@ export class Step extends Evented {
   /**
    * Wraps `_show` and ensures `beforeShowPromise` resolves before calling show
    */
-  show() {
+  show(): Promise<void> {
     if (isFunction(this.options.beforeShowPromise)) {
       return Promise.resolve(this.options.beforeShowPromise()).then(() =>
         this._show()
@@ -436,6 +436,7 @@ export class Step extends Evented {
     }
     return Promise.resolve(this._show());
   }
+
 
   /**
    * Updates the options of the step.
@@ -456,7 +457,7 @@ export class Step extends Evented {
    * Returns the element for the step
    * @return {HTMLElement|null|undefined} The element instance. undefined if it has never been shown, null if it has been destroyed
    */
-  getElement() {
+  getElement(): HTMLElement | null | undefined {
     return this.el;
   }
 
@@ -464,7 +465,7 @@ export class Step extends Evented {
    * Returns the target for the step
    * @return {HTMLElement|null|undefined} The element instance. undefined if it has never been shown, null if query string has not been found
    */
-  getTarget() {
+  getTarget(): HTMLElement | null | undefined {
     return this.target;
   }
 
@@ -474,7 +475,7 @@ export class Step extends Evented {
    * @return {HTMLElement} The DOM element for the step tooltip
    * @private
    */
-  _createTooltipContent() {
+  private _createTooltipContent(): HTMLElement {
     const descriptionId = `${this.id}-description`;
     const labelId = `${this.id}-label`;
 
@@ -503,7 +504,7 @@ export class Step extends Evented {
    * if an object, passes that object as the params to `scrollIntoView` i.e. `{ behavior: 'smooth', block: 'center' }`
    * @private
    */
-  _scrollTo(scrollToOptions: boolean | ScrollIntoViewOptions) {
+  private _scrollTo(scrollToOptions: boolean | ScrollIntoViewOptions) {
     const { element } = this._getResolvedAttachToOptions();
 
     if (isFunction(this.options.scrollToHandler)) {
@@ -521,7 +522,7 @@ export class Step extends Evented {
    * @param {StepOptions} stepOptions The step specific options
    * @returns {string} unique string from array of classes
    */
-  _getClassOptions(stepOptions: StepOptions) {
+  _getClassOptions(stepOptions: StepOptions): string {
     const defaultStepOptions =
       this.tour && this.tour.options && this.tour.options.defaultStepOptions;
     const stepClasses = stepOptions.classes ? stepOptions.classes : '';
@@ -576,7 +577,7 @@ export class Step extends Evented {
    * Create the element and set up the FloatingUI instance
    * @private
    */
-  _setupElements() {
+  private _setupElements() {
     if (!isUndefined(this.el)) {
       this.destroy();
     }
@@ -597,7 +598,7 @@ export class Step extends Evented {
    * sets up a FloatingUI instance for the tooltip, then triggers `show`.
    * @private
    */
-  _show() {
+  private _show() {
     this.trigger('before-show');
 
     // Force resolve to make sure the options are updated on subsequent shows.
@@ -645,7 +646,7 @@ export class Step extends Evented {
    * @param {Step} step The step object that attaches to the element
    * @private
    */
-  _styleTargetElementForStep(step: Step) {
+  private _styleTargetElementForStep(step: Step) {
     const targetElement = step.target;
 
     if (!targetElement) {
@@ -668,7 +669,7 @@ export class Step extends Evented {
    * and 'shepherd-target' classes
    * @private
    */
-  _updateStepTargetOnHide() {
+  private _updateStepTargetOnHide() {
     const target = this.target || document.body;
 
     if (this.options.highlightClass) {

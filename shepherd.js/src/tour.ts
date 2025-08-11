@@ -170,7 +170,7 @@ export class Tour extends Evented {
    * is added to the end of the array.
    * @return The newly added step
    */
-  addStep(options: StepOptions | Step, index?: number) {
+  addStep(options: StepOptions | Step, index?: number): Step | StepOptions {
     let step = options;
 
     if (!(step instanceof Step)) {
@@ -249,7 +249,7 @@ export class Tour extends Evented {
    * @param {number | string} id - The id of the step to retrieve
    * @return The step corresponding to the `id`
    */
-  getById(id: number | string) {
+  getById(id: number | string): Step | undefined {
     return this.steps.find((step) => {
       return step.id === id;
     });
@@ -258,7 +258,7 @@ export class Tour extends Evented {
   /**
    * Gets the current step
    */
-  getCurrentStep() {
+  getCurrentStep(): Step | null | undefined {
     return this.currentStep;
   }
 
@@ -276,7 +276,7 @@ export class Tour extends Evented {
   /**
    * Check if the tour is active
    */
-  isActive() {
+  isActive(): boolean {
     return Shepherd.activeTour === this;
   }
 
@@ -352,7 +352,7 @@ export class Tour extends Evented {
     }
   }
 
-  getName() {
+  getName(): string | null {
     return this.options.tourName ?? null;
   }
 
@@ -378,7 +378,7 @@ export class Tour extends Evented {
    * @param {string} event - The event name to trigger
    * @private
    */
-  _done(event: string) {
+  private _done(event: string) {
     const index = this.steps.indexOf(this.currentStep as Step);
     if (Array.isArray(this.steps)) {
       this.steps.forEach((step) => step.destroy());
@@ -456,7 +456,7 @@ export class Tour extends Evented {
    * @param {boolean} forward - True if we are going forward, false if backward
    * @private
    */
-  _skipStep(step: Step, forward: boolean) {
+  private _skipStep(step: Step, forward: boolean) {
     const index = this.steps.indexOf(step);
 
     if (index === this.steps.length - 1) {
@@ -472,7 +472,7 @@ export class Tour extends Evented {
    * already active, call `this._setupActiveTour`.
    * @private
    */
-  _updateStateBeforeShow() {
+  private _updateStateBeforeShow() {
     if (this.currentStep) {
       this.currentStep.hide();
     }
@@ -487,7 +487,7 @@ export class Tour extends Evented {
    * @param {string} optionsId - True if we are going forward, false if backward
    * @private
    */
-  _setTourID(optionsId: string | undefined) {
+  private _setTourID(optionsId: string | undefined) {
     const tourName = this.options.tourName || 'tour';
     const tourId = optionsId || uuid();
 
