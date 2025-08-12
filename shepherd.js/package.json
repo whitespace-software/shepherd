@@ -1,6 +1,6 @@
 {
-  "name": "shepherd.js",
-  "version": "13.0.3",
+  "name": "@whitespace-software/shepherd.js",
+  "version": "13.0.3-ws",
   "description": "Guide your users through a tour of your app.",
   "keywords": [
     "site tour",
@@ -8,10 +8,9 @@
     "tutorial",
     "shepherd"
   ],
-  "homepage": "https://shepherdpro.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shepherd-pro/shepherd.git"
+    "url": "git+https://github.com/whitespace-software/shepherd.git"
   },
   "license": "MIT",
   "authors": [
@@ -95,6 +94,6 @@
     "node": "18.* || >= 20"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://npm.pkg.github.com"
   }
 }

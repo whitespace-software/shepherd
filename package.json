@@ -2,10 +2,10 @@
   "name": "shepherd-monorepo",
   "private": "true",
   "version": "12.0.0-alpha.13",
-  "description": "The monorepo for Shepherd",
+  "description": "The monorepo for Whitespace Shepherd",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shepherd-pro/shepherd.git"
+    "url": "git+https://github.com/whitespace-software/shepherd.git"
   },
   "license": "MIT",
   "authors": [
