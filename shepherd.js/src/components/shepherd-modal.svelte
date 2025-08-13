@@ -280,9 +280,14 @@
     height: 100vh;
     /* opacity: 0.5; */
     opacity: var(--opacity);
-    transition:
+    /* transition:
       all 0.3s ease-out,
       height 0s 0s,
+      opacity 0.3s 0s; */
+
+    transition:
+      all 0.3s ease-out,
+      height 1ms 0s,
       opacity 0.3s 0s;
     transform: translateZ(0);
   }
