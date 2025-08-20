@@ -22,7 +22,8 @@
 
 <style global>
   .shepherd-progress-bar {
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1rem;
     color: var(--tour-grey-dark);
   }
 

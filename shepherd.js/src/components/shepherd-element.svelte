@@ -226,6 +226,12 @@
     /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); */
     filter: drop-shadow(0 1px 4px rgba(0,0,0,.2));
 
+    /* font-family: var(--tour-font); */
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--tour-grey-darkest);
+    line-height: 1.5;
+
     max-width: 560px;
     opacity: 0;
     outline: none;

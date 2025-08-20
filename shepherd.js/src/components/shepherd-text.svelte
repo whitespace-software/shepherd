@@ -49,13 +49,13 @@
   .shepherd-text {
     columns: var(--tour-grey-darkest);
     background-color: white;
-    font-size: 0.875rem;
     /* line-height: 1.3em; */
     padding: 1rem 1.5rem;
   }
 
   .shepherd-text p {
     margin-top: 0;
+    margin-bottom: 1rem;
   }
 
   .shepherd-text p:last-child {

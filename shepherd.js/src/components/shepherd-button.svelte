@@ -62,7 +62,9 @@
     cursor: pointer;
 
     text-align: center;
+
     font-family:  Roboto, Helvetica, Arial, sans-serif;
+    line-height: inherit;
     font-weight: 500;
     font-size: 0.875rem;
 

@@ -35,7 +35,7 @@
 <footer class="shepherd-footer footer-group">
 
   {#if !!addtionalButtons && addtionalButtons.length > 0 }
-    <div class="secondary-row">
+    <div class="secondary-row" class:primary-row-hidden={!showPrimaryRow}>
       {#each addtionalButtons as addtionalBtn}
         <ShepherdButton config={addtionalBtn} step={step} />
       {/each}
@@ -84,6 +84,10 @@
 
   .primary-row, .secondary-row {
     padding: 0.5rem 1.5rem;
+  }
+
+  .secondary-row.primary-row-hidden {
+    padding-block: 1rem;
   }
 
 

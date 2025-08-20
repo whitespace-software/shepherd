@@ -27,11 +27,10 @@
     background-color: transparent;
     border: none;
 
-    color: var(--tour-primary);
-
+    font: inherit;
     font-family: var(--tour-font);
-    font-size: 0.875rem;
     font-weight: 400;
+    color: var(--tour-primary);
 
     /* padding-inline: 0.75rem; */
 

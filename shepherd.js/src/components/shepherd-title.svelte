@@ -26,9 +26,9 @@
     margin: 0;
     padding: 0;
 
-    color: var(--tour-grey-darkest);
+    font: inherit;
     font-family: var(--tour-font);
-    font-size: 0.875rem;
     font-weight: 500;
+    line-height: 1.2;
   }
 </style>
