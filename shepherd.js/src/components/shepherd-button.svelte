@@ -53,7 +53,6 @@
 <style global>
   .shepherd-button {
     background-color: transparent;
-    color: var(--tour-primary);
 
     border: none;
     border-radius: 0.25rem;
@@ -64,9 +63,10 @@
     text-align: center;
 
     font-family:  Roboto, Helvetica, Arial, sans-serif;
-    line-height: inherit;
     font-weight: 500;
-    font-size: 0.875rem;
+    font-size: var(--tour-font-size);
+    line-height: var(--tour-line-height);
+    color: var(--tour-primary);
 
     /* margin-right: 0.5rem; */
     padding: 0.625rem 0.75rem;

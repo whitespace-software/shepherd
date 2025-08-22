@@ -47,10 +47,17 @@
 
 <style global>
   .shepherd-text {
-    columns: var(--tour-grey-darkest);
-    background-color: white;
     /* line-height: 1.3em; */
+    background-color: white;
     padding: 1rem 1.5rem;
+
+    font-family: var(--tour-font-primary);
+    font-size: var(--tour-font-size);
+    font-weight: var(--tour-font-weight);
+    line-height: var(--tour-line-height);
+    color: var(--tour-font-color);
+
+
   }
 
   .shepherd-text p {

@@ -217,7 +217,18 @@
 
     --tour-btn-active-shadow-col: #6161624d;
 
-    --tour-font: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    /* --tour-font: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; */
+
+    --tour-font-primary: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", "Liberation Sans", sans-serif;
+    --tour-font-secondary: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+    --tour-font-weight: 300;
+    --tour-font-size: 0.875rem;
+    --tour-font-color: var(--tour-grey-darkest);
+    --tour-line-height: 1.5;
+
+
+
   }
 
   .shepherd-element {
@@ -226,11 +237,12 @@
     /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); */
     filter: drop-shadow(0 1px 4px rgba(0,0,0,.2));
 
-    /* font-family: var(--tour-font); */
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: var(--tour-grey-darkest);
-    line-height: 1.5;
+    font-family: var(--tour-font-primary);
+    font-size: var(--tour-font-size);
+    font-weight: var(--tour-font-weight);
+    line-height: var(--tour-line-height);
+    color: var(--tour-font-color);
+
 
     max-width: 560px;
     opacity: 0;

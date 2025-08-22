@@ -26,9 +26,11 @@
     margin: 0;
     padding: 0;
 
-    font: inherit;
-    font-family: var(--tour-font);
+    font-family: var(--tour-font-secondary);
     font-weight: 500;
+    font-size: var(--tour-font-size);
     line-height: 1.2;
+
+    color: var(--tour-font-color);
   }
 </style>
