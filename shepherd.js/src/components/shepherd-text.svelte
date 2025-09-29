@@ -60,6 +60,10 @@
 
   }
 
+  .shepherd-text b {
+    font-weight: bold;
+  }
+
   .shepherd-text p {
     margin-top: 0;
     margin-bottom: 1rem;
