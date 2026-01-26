@@ -11,7 +11,7 @@ import {
   type MiddlewareData,
   type Placement
 } from '@floating-ui/dom';
-import type { Step, StepOptions, StepOptionsAttachTo } from '../step.ts';
+import type { ResolvedAttachTo, Step, StepOptions, StepOptionsAttachTo } from '../step.ts';
 import { isHTMLElement } from './type-check.ts';
 
 /**
@@ -24,9 +24,10 @@ export function setupTooltip(step: Step): ComputePositionConfig {
     step.cleanup();
   }
 
-  const attachToOptions = step._getResolvedAttachToOptions();
+  const attachToOptions: ResolvedAttachTo = step._getResolvedAttachToOptions();
 
-  let target = attachToOptions.element as HTMLElement;
+  let target: HTMLElement = attachToOptions.element ?? document.body;
+
   const floatingUIOptions = getFloatingUIOptions(attachToOptions, step);
   const shouldCenter = shouldCenterStep(attachToOptions);
 
@@ -47,7 +48,8 @@ export function setupTooltip(step: Step): ComputePositionConfig {
     setPosition(target, step, floatingUIOptions, shouldCenter);
   }, {animationFrame: true, layoutShift: true});
 
-  step.target = attachToOptions.element as HTMLElement;
+  step.target = attachToOptions.element;
+  step.secondaryTargets = attachToOptions.highlightElements?.filter(el => !!el) ?? undefined;
 
   return floatingUIOptions;
 }

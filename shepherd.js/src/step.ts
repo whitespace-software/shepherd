@@ -206,21 +206,35 @@ export type PopperPlacement =
   | 'left-start'
   | 'left-end';
 
-export interface StepOptionsAttachTo {
-  element?:
-    | HTMLElement
-    | string
-    | null
-    | (() => HTMLElement | string | null | undefined);
-  on?: PopperPlacement;
+export type UnresolvedElement = HTMLElement | string | null | undefined | (() => HTMLElement | string | null | undefined);
+export type ResolvedElement = HTMLElement | undefined;
+
+export interface AttachToConfig<ElementType = UnresolvedElement> {
+  element?: ElementType,
+  on?: PopperPlacement,
+  highlightElements?: ElementType[]
 }
+
+
+// export interface StepOptionsAttachTo {
+//   element?:
+//     | HTMLElement
+//     | string
+//     | null
+//     | (() => HTMLElement | string | null | undefined);
+//   on?: PopperPlacement;
+// }
+
+export type StepOptionsAttachTo = AttachToConfig<UnresolvedElement>;
+export type ResolvedAttachTo = AttachToConfig<ResolvedElement>;
+
 
 export interface StepOptionsAdvanceOn {
   event: string;
   selector: string;
 }
-
 export interface StepOptionsButton {
+
   /**
    * A function executed when the button is clicked on
    * It is automatically bound to the `tour` the step is associated with, so things like `this.next` will
@@ -300,7 +314,7 @@ export interface StepOptionsVideo {
  * @extends {Evented}
  */
 export class Step extends Evented {
-  private _resolvedAttachTo: StepOptionsAttachTo | null;
+  private _resolvedAttachTo: ResolvedAttachTo | null;
   classPrefix?: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
   declare cleanup: Function | null;
@@ -308,6 +322,7 @@ export class Step extends Evented {
   declare id: string;
   declare options: StepOptions;
   target?: HTMLElement | null;
+  secondaryTargets?: HTMLElement[] | null;
   tour: Tour;
 
   constructor(tour: Tour, options: StepOptions = {}) {
@@ -399,7 +414,7 @@ export class Step extends Evented {
    * Resolves attachTo options.
    * @returns {{}|{element, on}}
    */
-  _resolveAttachToOptions(): StepOptionsAttachTo {
+  _resolveAttachToOptions(): ResolvedAttachTo {
     this._resolvedAttachTo = parseAttachTo(this);
     return this._resolvedAttachTo;
   }
@@ -409,7 +424,7 @@ export class Step extends Evented {
    * @returns {{}|{element, on}}
    * @private
    */
-  private _getResolvedAttachToOptions(): StepOptionsAttachTo {
+  _getResolvedAttachToOptions(): ResolvedAttachTo {
     if (this._resolvedAttachTo === null) {
       return this._resolveAttachToOptions();
     }
@@ -467,6 +482,10 @@ export class Step extends Evented {
    */
   getTarget(): HTMLElement | null | undefined {
     return this.target;
+  }
+  
+  getSecondaryTargets(): HTMLElement[] | null | undefined {
+    return this.secondaryTargets;
   }
 
   /**
@@ -632,8 +651,19 @@ export class Step extends Evented {
     // @ts-expect-error TODO: get types for Svelte components
     const content = this.shepherdElementComponent.getElement();
     const target = this.target || document.body;
-    target.classList.add(`${this.classPrefix}shepherd-enabled`);
-    target.classList.add(`${this.classPrefix}shepherd-target`);
+    const secondaryTargets = this.secondaryTargets;
+
+    const enabledClass = `${this.classPrefix}shepherd-enabled`;
+    const targetClass = `${this.classPrefix}shepherd-target`;
+
+    target.classList.add(enabledClass);
+    target.classList.add(targetClass);
+
+    secondaryTargets?.forEach(el => {
+      el.classList.add(enabledClass);
+      el.classList.add(targetClass);
+    });
+
     content.classList.add('shepherd-enabled');
 
     this.trigger('show');
@@ -657,11 +687,22 @@ export class Step extends Evented {
       targetElement.classList.add(step.options.highlightClass);
     }
 
-    targetElement.classList.remove('shepherd-target-click-disabled');
+    const clickDisabledClass = 'shepherd-target-click-disabled';
+
+    targetElement.classList.remove(clickDisabledClass);
 
     if (step.options.canClickTarget === false) {
-      targetElement.classList.add('shepherd-target-click-disabled');
+      targetElement.classList.add(clickDisabledClass);
     }
+
+    const secondaryTargets = step.secondaryTargets;
+    if(!secondaryTargets){
+      return;
+    }
+
+    secondaryTargets.forEach(el => el.classList.add(clickDisabledClass));
+
+
   }
 
   /**
@@ -676,10 +717,21 @@ export class Step extends Evented {
       target.classList.remove(this.options.highlightClass);
     }
 
-    target.classList.remove(
+    const classes = [
       'shepherd-target-click-disabled',
       `${this.classPrefix}shepherd-enabled`,
       `${this.classPrefix}shepherd-target`
-    );
+    ];
+
+    target.classList.remove( ...classes );
+
+    const secondaryTargets = this.secondaryTargets;
+    if(!secondaryTargets){
+      return;
+    }
+
+    secondaryTargets.forEach(el => el.classList.remove(...classes));
+
+
   }
 }

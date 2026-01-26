@@ -2,9 +2,12 @@ import { type Tour, type TourOptions } from '../tour.ts';
 import {
   type StepOptionsAttachTo,
   type Step,
-  type StepOptions
+  type StepOptions,
+  type UnresolvedElement,
+  type ResolvedElement,
+  type ResolvedAttachTo
 } from '../step.ts';
-import { isFunction, isString } from './type-check.ts';
+import { isFunction, isHTMLElement, isString } from './type-check.ts';
 
 export class StepNoOp {
   constructor(_options: StepOptions) {}
@@ -27,37 +30,62 @@ export function normalizePrefix(prefix?: string) {
   return prefix.charAt(prefix.length - 1) !== '-' ? `${prefix}-` : prefix;
 }
 
-/**
- * Resolves attachTo options, converting element option value to a qualified HTMLElement.
- * @param step - The step instance
- * @returns {{}|{element, on}}
- * `element` is a qualified HTML Element
- * `on` is a string position value
- */
-export function parseAttachTo(step: Step) {
-  const options = step.options.attachTo || {};
-  const returnOpts = Object.assign({}, options);
+function tryQuerySelector(query: string): HTMLElement | undefined {
+  const element = document.querySelector<HTMLElement>(query);
 
-  if (isFunction(returnOpts.element)) {
-    // Bind the callback to step so that it has access to the object, to enable running additional logic
-    returnOpts.element = returnOpts.element.call(step);
+  if(!element){
+    console.error( `The element for this Shepherd step was not found ${query}` );
+    return undefined;
   }
 
-  if (isString(returnOpts.element)) {
-    // Can't override the element in user opts reference because we can't
-    // guarantee that the element will exist in the future.
-    try {
-      returnOpts.element = document.querySelector(
-        returnOpts.element
-      ) as HTMLElement;
-    } catch (e) {
-      // TODO
-    }
-    if (!returnOpts.element) {
-      console.error(
-        `The element for this Shepherd step was not found ${options.element}`
-      );
-    }
+  return element;
+
+}
+
+
+function parseElement(step: Step, element: UnresolvedElement): ResolvedElement {
+
+  if(!element){
+    console.error( `The element for this Shepherd step was not found ${element}`);
+    return undefined;
+  }
+
+  if(isHTMLElement(element)) {
+    return element;
+  }
+
+  if(isString(element)){
+    return tryQuerySelector(element);
+  }
+
+  const fnResult = element.call(step);
+  if(!fnResult){
+    return undefined;
+  }
+
+  if(isString(fnResult)){
+    return tryQuerySelector(fnResult);
+  }
+
+  return fnResult;
+
+
+}
+
+
+export function parseAttachTo(step: Step): ResolvedAttachTo {
+  const options = step.options.attachTo || {};
+
+  const target = parseElement(step, options.element);
+  const highlights = (options.highlightElements
+    ?.map(el => parseElement(step, el))
+    .filter(el => !!el)
+  );
+
+  const returnOpts: ResolvedAttachTo = {
+    element: target,
+    highlightElements: highlights,
+    on: options.on
   }
 
   return returnOpts;

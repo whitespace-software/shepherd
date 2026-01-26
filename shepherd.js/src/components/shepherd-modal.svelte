@@ -1,26 +1,35 @@
 <script lang="typescript">
-  import  { Step } from 'src/step.ts';
-  import { makeOverlayPath, type OverlayPathParams } from '../utils/overlay-path.ts';
+  import { Step } from "src/step.ts";
+  import {
+    makeOverlayPath,
+    type CornerRadiusObj,
+    type OverlayPathParams
+  } from "../utils/overlay-path.ts";
 
-  export let element: SVGSVGElement, openingProperties: OverlayPathParams, overlayOpacity: number = 0.5;
+  export let element: SVGSVGElement,
+    mainOpeningProps: OverlayPathParams,
+    secondaryOpeningProps: OverlayPathParams[],
+    overlayOpacity: number = 0.5;
   let modalIsVisible = false;
   let rafId: number | undefined = undefined;
   let pathDefinition: string;
 
-  $: pathDefinition = makeOverlayPath(openingProperties);
+  $: pathDefinition = makeOverlayPath(mainOpeningProps, secondaryOpeningProps);
 
   closeModalOpening();
 
   export const getElement = () => element;
 
   export function closeModalOpening() {
-    openingProperties = {
+    mainOpeningProps = {
       width: 0,
       height: 0,
       x: 0,
       y: 0,
       r: 0
     };
+
+    secondaryOpeningProps = [];
   }
 
   /**
@@ -31,6 +40,44 @@
 
     // Ensure we cleanup all event listeners when we hide the modal
     _cleanupStepEventListeners();
+  }
+
+  function getFixedCornerRaidus(radius: OverlayPathParams["r"]): number | null {
+    if (radius === undefined) {
+      return null;
+    }
+
+    if (typeof radius === "number") {
+      return radius;
+    }
+
+    const { topLeft, topRight, bottomLeft, bottomRight } = radius;
+
+    const isFixed = [topLeft, topRight, bottomLeft, bottomRight].every(
+      (num) => num === topLeft
+    );
+
+    return topLeft;
+  }
+
+  function getProps(
+    modalOverlayOpeningPadding: number = 0,
+    modalOverlayOpeningRadius: number | CornerRadiusObj = 0,
+    modalOverlayOpeningXOffset: number = 0,
+    modalOverlayOpeningYOffset: number = 0,
+    scrollParent: HTMLElement | null | undefined,
+    element: HTMLElement
+  ): OverlayPathParams {
+    const { y, height } = _getVisibleHeight(element, scrollParent);
+    const { x, width, left } = element.getBoundingClientRect();
+
+    return {
+      width: width + modalOverlayOpeningPadding * 2,
+      height: height + modalOverlayOpeningPadding * 2,
+      x: (x || left) + modalOverlayOpeningXOffset - modalOverlayOpeningPadding,
+      y: y + modalOverlayOpeningYOffset - modalOverlayOpeningPadding,
+      r: modalOverlayOpeningRadius
+    };
   }
 
   /**
@@ -44,28 +91,45 @@
    */
   export function positionModal(
     modalOverlayOpeningPadding: number = 0,
-    modalOverlayOpeningRadius: number | { topLeft: number; bottomLeft: number; bottomRight: number; topRight: number; } = 0,
+    modalOverlayOpeningRadius:
+      | number
+      | CornerRadiusObj = 0,
     modalOverlayOpeningXOffset: number = 0,
     modalOverlayOpeningYOffset: number = 0,
     scrollParent: HTMLElement | null | undefined,
-    targetElement: HTMLElement | null | undefined
+    targetElement: HTMLElement | null | undefined,
+    secondaryTargets: HTMLElement[] | null | undefined
   ) {
-    if (targetElement) {
-      const { y, height } = _getVisibleHeight(targetElement, scrollParent);
-      const { x, width, left } = targetElement.getBoundingClientRect();
 
-      // getBoundingClientRect is not consistent. Some browsers use x and y, while others use left and top
-      openingProperties = {
-        width: width + modalOverlayOpeningPadding * 2,
-        height: height + modalOverlayOpeningPadding * 2,
-        x:
-          (x || left) + modalOverlayOpeningXOffset - modalOverlayOpeningPadding,
-        y: y + modalOverlayOpeningYOffset - modalOverlayOpeningPadding,
-        r: modalOverlayOpeningRadius
-      };
-    } else {
+    if (!targetElement) {
       closeModalOpening();
+      return;
     }
+
+    mainOpeningProps = getProps(
+      modalOverlayOpeningPadding,
+      modalOverlayOpeningRadius,
+      modalOverlayOpeningXOffset,
+      modalOverlayOpeningYOffset,
+      scrollParent,
+      targetElement
+    );
+
+    if (!secondaryTargets) {
+      secondaryOpeningProps = [];
+      return;
+    }
+
+    secondaryOpeningProps = secondaryTargets.map((el) =>
+      getProps(
+        modalOverlayOpeningPadding,
+        modalOverlayOpeningRadius,
+        modalOverlayOpeningXOffset,
+        modalOverlayOpeningYOffset,
+        scrollParent,
+        el
+      )
+    );
   }
 
   /**
@@ -105,7 +169,7 @@
    */
   function _addStepEventListeners() {
     // Prevents window from moving on touch.
-    window.addEventListener('touchmove', _preventModalBodyTouch, {
+    window.addEventListener("touchmove", _preventModalBodyTouch, {
       passive: false
     });
   }
@@ -120,7 +184,7 @@
       rafId = undefined;
     }
 
-    (window as any).removeEventListener('touchmove', _preventModalBodyTouch, {
+    (window as any).removeEventListener("touchmove", _preventModalBodyTouch, {
       passive: false
     });
   }
@@ -150,7 +214,8 @@
         modalOverlayOpeningXOffset + iframeOffset.left,
         modalOverlayOpeningYOffset + iframeOffset.top,
         scrollParent,
-        step.target
+        step.target,
+        step.secondaryTargets
       );
       rafId = requestAnimationFrame(rafLoop);
     };
@@ -166,7 +231,9 @@
    * @returns {HTMLElement}
    * @private
    */
-  function _getScrollParent(element: HTMLElement | null | undefined): HTMLElement | null {
+  function _getScrollParent(
+    element: HTMLElement | null | undefined
+  ): HTMLElement | null {
     if (!element) {
       return null;
     }
@@ -174,7 +241,7 @@
     const isHtmlElement = element instanceof HTMLElement;
     const overflowY =
       isHtmlElement && window.getComputedStyle(element).overflowY;
-    const isScrollable = overflowY !== 'hidden' && overflowY !== 'visible';
+    const isScrollable = overflowY !== "hidden" && overflowY !== "visible";
 
     if (isScrollable && element.scrollHeight >= element.clientHeight) {
       return element;
@@ -227,7 +294,10 @@
    * @returns {{y: number, height: number}}
    * @private
    */
-  function _getVisibleHeight(element: HTMLElement, scrollParent: HTMLElement | null | undefined) : { y: number; height: number; } {
+  function _getVisibleHeight(
+    element: HTMLElement,
+    scrollParent: HTMLElement | null | undefined
+  ): { y: number; height: number } {
     const elementRect = element.getBoundingClientRect();
     let top = elementRect.y || elementRect.top;
     let bottom = elementRect.bottom || top + elementRect.height;
@@ -251,12 +321,17 @@
   bind:this={element}
   id="tourModalOverlay"
   class={`${
-    modalIsVisible ? 'shepherd-modal-is-visible' : ''
+    modalIsVisible ? "shepherd-modal-is-visible" : ""
   } shepherd-modal-overlay-container`}
-  style="--opacity: {overlayOpacity}"
+  style="
+    --opacity: {overlayOpacity};
+  "
   on:touchmove={_preventModalOverlayTouch}
 >
-  <path d={pathDefinition} />
+
+  
+  <path id="overlayPath" class="overlay-path" d={pathDefinition} />
+
 </svg>
 
 <style global>
@@ -274,25 +349,28 @@
       opacity 0.3s 0ms;
     width: 100vw;
     z-index: 9997;
+
   }
 
   .shepherd-modal-overlay-container.shepherd-modal-is-visible {
     height: 100vh;
-    /* opacity: 0.5; */
     opacity: var(--opacity);
     /* transition:
       all 0.3s ease-out,
       height 0s 0s,
       opacity 0.3s 0s; */
 
+
     transition:
       all 0.3s ease-out,
       height 1ms 0s,
       opacity 0.3s 0s;
     transform: translateZ(0);
+
   }
 
   .shepherd-modal-overlay-container.shepherd-modal-is-visible path {
     pointer-events: all;
   }
+
 </style>

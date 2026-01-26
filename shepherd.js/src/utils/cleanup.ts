@@ -11,13 +11,17 @@ export function cleanupSteps(tour: Tour) {
 
     steps.forEach((step) => {
       if (
-        step.options &&
-        step.options.canClickTarget === false &&
-        step.options.attachTo
+        step.options 
+        && step.options.attachTo
       ) {
-        if (isHTMLElement(step.target)) {
-          step.target.classList.remove('shepherd-target-click-disabled');
+
+        const clickDisabledClass = 'shepherd-target-click-disabled';
+        if (step.options.canClickTarget === false && isHTMLElement(step.target)) {
+          step.target.classList.remove(clickDisabledClass);
         }
+
+        step.secondaryTargets?.forEach(el => el.classList.remove(clickDisabledClass));
+
       }
     });
   }
