@@ -63,8 +63,29 @@ function getRadiusProps(r: OverlayPathParams["r"]): CornerRadiusObj {
 //     `;
 // }
 
+
+export function makePath(pathParams: OverlayPathParams) {
+
+    const { width, height, x = 0, y = 0, r } = pathParams;
+    const { topLeft, topRight, bottomRight, bottomLeft } = getRadiusProps(r);
+
+    const path = `
+        M ${x + topLeft},${y}\
+        a ${topLeft},${topLeft},0,0,0-${topLeft},${topLeft}\
+        V ${height + y - bottomLeft}\
+        a ${bottomLeft},${bottomLeft},0,0,0,${bottomLeft},${bottomLeft}\
+        H ${width + x - bottomRight}\
+        a ${bottomRight},${bottomRight},0,0,0,${bottomRight}-${bottomRight}\
+        V ${y + topRight}\
+        a ${topRight},${topRight},0,0,0-${topRight}-${topRight}\
+        Z\
+    `;
+
+    return path;
+}
+
+
 export function makeOverlayPath(mainPath: OverlayPathParams, seconaryPaths: OverlayPathParams[] | undefined) {
-    const pathParamsList = [mainPath, ...seconaryPaths ?? []];
     const { innerWidth: w, innerHeight: h } = window;
 
     let path = `
@@ -76,24 +97,58 @@ export function makeOverlayPath(mainPath: OverlayPathParams, seconaryPaths: Over
         Z\
     `;
 
-    pathParamsList.forEach(pathParams => {
-        const { width, height, x = 0, y = 0, r } = pathParams;
-        const { topLeft, topRight, bottomRight, bottomLeft } = getRadiusProps(r);
 
-        path += `
-            M ${x + topLeft},${y}\
-            a ${topLeft},${topLeft},0,0,0-${topLeft},${topLeft}\
-            V ${height + y - bottomLeft}\
-            a ${bottomLeft},${bottomLeft},0,0,0,${bottomLeft},${bottomLeft}\
-            H ${width + x - bottomRight}\
-            a ${bottomRight},${bottomRight},0,0,0,${bottomRight}-${bottomRight}\
-            V ${y + topRight}\
-            a ${topRight},${topRight},0,0,0-${topRight}-${topRight}\
-            Z\
-        `;
+    const pathParamsList = [mainPath, ...seconaryPaths ?? []];
+    pathParamsList.forEach(params => {
+        path += makePath(params);
+    })
 
-    });
+    // pathParamsList.forEach(pathParams => {
+    //     const { width, height, x = 0, y = 0, r } = pathParams;
+    //     const { topLeft, topRight, bottomRight, bottomLeft } = getRadiusProps(r);
+
+    //     path += `
+    //         M ${x + topLeft},${y}\
+    //         a ${topLeft},${topLeft},0,0,0-${topLeft},${topLeft}\
+    //         V ${height + y - bottomLeft}\
+    //         a ${bottomLeft},${bottomLeft},0,0,0,${bottomLeft},${bottomLeft}\
+    //         H ${width + x - bottomRight}\
+    //         a ${bottomRight},${bottomRight},0,0,0,${bottomRight}-${bottomRight}\
+    //         V ${y + topRight}\
+    //         a ${topRight},${topRight},0,0,0-${topRight}-${topRight}\
+    //         Z\
+    //     `;
+
+    // });
 
     return path;
 
 }
+
+
+
+// export function makeOutlinePath(mainPath: OverlayPathParams, seconaryPaths: OverlayPathParams[] | undefined){
+//     const pathParamsList = [mainPath, ...seconaryPaths ?? []];
+
+//     let path = "";
+
+//     pathParamsList.forEach(pathParams => {
+//         const { width, height, x = 0, y = 0, r } = pathParams;
+//         const { topLeft, topRight, bottomRight, bottomLeft } = getRadiusProps(r);
+
+//         path += `
+//             M ${x + topLeft},${y}\
+//             a ${topLeft},${topLeft},0,0,0-${topLeft},${topLeft}\
+//             V ${height + y - bottomLeft}\
+//             a ${bottomLeft},${bottomLeft},0,0,0,${bottomLeft},${bottomLeft}\
+//             H ${width + x - bottomRight}\
+//             a ${bottomRight},${bottomRight},0,0,0,${bottomRight}-${bottomRight}\
+//             V ${y + topRight}\
+//             a ${topRight},${topRight},0,0,0-${topRight}-${topRight}\
+//             Z\
+//         `;
+
+//     });
+
+//     return path;
+// }

@@ -2,6 +2,7 @@
   import { Step } from "src/step.ts";
   import {
     makeOverlayPath,
+    makePath,
     type CornerRadiusObj,
     type OverlayPathParams
   } from "../utils/overlay-path.ts";
@@ -15,6 +16,7 @@
   let pathDefinition: string;
 
   $: pathDefinition = makeOverlayPath(mainOpeningProps, secondaryOpeningProps);
+  $: outlinePathDefinition = makePath(mainOpeningProps);
 
   closeModalOpening();
 
@@ -329,8 +331,18 @@
   on:touchmove={_preventModalOverlayTouch}
 >
 
-  
   <path id="overlayPath" class="overlay-path" d={pathDefinition} />
+
+  @{#if overlayOpacity > 0}
+
+    <path
+      id="outlinePath"
+      class="outline-path"
+      pathLength="1"
+      d={outlinePathDefinition}
+    ></path>
+
+  {/if}
 
 </svg>
 
@@ -354,20 +366,56 @@
 
   .shepherd-modal-overlay-container.shepherd-modal-is-visible {
     height: 100vh;
-    opacity: var(--opacity);
+    opacity: 1;
+
     /* transition:
       all 0.3s ease-out,
       height 0s 0s,
-      opacity 0.3s 0s; */
-
+      opacity 0.3s 0s;
+    */
 
     transition:
-      all 0.3s ease-out,
+      all 300ms ease-out,
       height 1ms 0s,
-      opacity 0.3s 0s;
+      opacity 100ms 0s;
     transform: translateZ(0);
 
   }
+
+  .shepherd-modal-overlay-container.shepherd-modal-is-visible .overlay-path {
+    fill: rgba(0, 0, 0, var(--opacity));
+  }
+
+  .shepherd-modal-overlay-container.shepherd-modal-is-visible .outline-path {
+
+    stroke: var(--tour-primary);
+
+    --starting-stroke-width: 0px;
+    --ending-stroke-width: 3px;
+    stroke-width: var(--starting-stroke-width);
+
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+
+    fill: none;
+
+    pointer-events: none;
+
+    animation: outline-path-animation 500ms 100ms ease-in-out forwards;
+
+  }
+
+
+  @keyframes outline-path-animation {
+    from {
+      stroke-width: var(--starting-stroke-width);
+    }
+
+    to {
+      stroke-width: var(--ending-stroke-width);
+    }
+  }
+
 
   .shepherd-modal-overlay-container.shepherd-modal-is-visible path {
     pointer-events: all;
